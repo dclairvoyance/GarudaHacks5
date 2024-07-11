@@ -21,6 +21,22 @@ const TrackerComponent = () => {
     // Add more months and tasks as needed
   });
 
+  function transformData(data) {
+    const result = {};
+  
+    data.forEach((item, index) => {
+      const tasksArray = item.tasks.split(';').map((task, taskIndex) => ({
+        id: index * 100 + taskIndex + 1,
+        name: task.trim(),
+        checked: false,
+      }));
+  
+      result[item.month] = tasksArray;
+    });
+  
+    return result;
+  }
+
   const [openMonth, setOpenMonth] = useState(null);
 
   const handleMonthClick = (month) => {
@@ -136,6 +152,8 @@ const TrackerComponent = () => {
         header: true,
         skipEmptyLines: true,
       });
+      const transformedData = transformData(parsedData.data);
+      setTasks(transformedData);
       setJsonData(parsedData.data);
     } catch (error) {
       console.error("Error generating CSV:", error);
@@ -201,11 +219,6 @@ const TrackerComponent = () => {
       >
         Generate CSV
       </button>
-      {jsonData.length > 0 && (
-        <div className="mt-4 p-2 bg-gray-200 rounded">
-          <pre>{JSON.stringify(jsonData, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };
