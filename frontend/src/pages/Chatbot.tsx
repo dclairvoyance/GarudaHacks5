@@ -1,32 +1,63 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import axios from "axios";
 
 interface Message {
   id: number;
-  text: string;
-  sender: 'sender' | 'receiver';
+  content: string;
+  role: "user" | "assistant";
 }
 
 const ChatBot: React.FC = () => {
+  const initialPrompt: Message = {
+    id: 0,
+    role: "assistant",
+    content: "Hello! How can I assist you today?",
+  };
+
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isSender, setIsSender] = useState(true); // Toggle to simulate different users
+  const [input, setInput] = useState<string>("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (input.trim()) {
-      const newMessage: Message = {
-        id: messages.length + 1,
-        text: input,
-        sender: isSender ? 'sender' : 'receiver'
-      };
-      setMessages([...messages, newMessage]);
-      setInput('');
-      setIsSender(!isSender); // Toggle sender
+
+    if (!input.trim()) {
+      return;
+    }
+
+    const newMessage: Message = {
+      id: messages.length + 1,
+      content: input,
+      role: "user",
+    };
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
+    setInput("");
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o",
+          messages: [initialPrompt, ...updatedMessages].map(
+            ({ role, content }) => ({ role, content })
+          ),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          },
+        }
+      );
+
+      const botMessage: Message = response.data.choices[0].message;
+      setMessages([...updatedMessages, botMessage]);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
     }
   };
 
@@ -36,9 +67,13 @@ const ChatBot: React.FC = () => {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`p-3 rounded-lg max-w-[70%] ${message.sender === 'sender' ? 'self-end bg-green-200 text-right' : 'self-start bg-gray-100 text-left'}`}
+            className={`p-3 rounded-lg max-w-[70%] ${
+              message.role === "user"
+                ? "self-end bg-green-200 text-right"
+                : "self-start bg-gray-100 text-left"
+            }`}
           >
-            {message.text}
+            {message.content}
           </div>
         ))}
       </div>
