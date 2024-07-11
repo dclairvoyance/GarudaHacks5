@@ -10,11 +10,17 @@ interface Message {
 const ChatBot: React.FC = () => {
   const initialPrompt: Message = {
     id: 0,
+    role: "user",
+    content: "<prompt>", // TODO: add prompt
+  };
+
+  const initialMessage: Message = {
+    id: 1,
     role: "assistant",
     content: "Hello! How can I assist you today?",
   };
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [input, setInput] = useState<string>("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
