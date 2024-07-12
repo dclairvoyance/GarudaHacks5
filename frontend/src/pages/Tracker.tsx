@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
 import axios from "axios";
+import TaskDetailModal from "../components/TaskDetailsModal";
 
-const TrackerComponent = () => {
-  const [selectedMonth, setSelectedMonth] = useState(null);
+interface Task {
+  id: number;
+  name: string;
+  checked: boolean;
+}
 
+const TrackerComponent: React.FC = () => {
+  const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [jsonData, setJsonData] = useState<any[]>([]);
   const information = "Ternate"; // TODO: change information from tektokan
 
-  const [tasks, setTasks] = useState({
+  const [tasks, setTasks] = useState<Record<string, Task[]>>({
     "January 2024": [
-      { id: 1, name: "Task 1", checked: false },
-      { id: 2, name: "Task 2", checked: false },
+      {
+        id: 1,
+        name: "Daily 15 minutes of English Speaking Practice",
+        checked: false,
+      },
+      {
+        id: 2,
+        name: "Start collecting School Certificates and Report Cards",
+        checked: false,
+      },
     ],
     "February 2024": [
       { id: 3, name: "Task 3", checked: false },
@@ -21,56 +35,60 @@ const TrackerComponent = () => {
     // Add more months and tasks as needed
   });
 
-  function transformData(data) {
-    const result = {};
+  const [openMonth, setOpenMonth] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  const transformData = (data: any[]) => {
+    const result: Record<string, Task[]> = {};
 
     data.forEach((item, index) => {
-      const tasksArray = item.tasks.split(";").map((task, taskIndex) => ({
-        id: index * 100 + taskIndex + 1,
-        name: task.trim(),
-        checked: false,
-      }));
+      const tasksArray = item.tasks
+        .split(";")
+        .map((task: string, taskIndex: number) => ({
+          id: index * 100 + taskIndex + 1,
+          name: task.trim(),
+          checked: false,
+        }));
 
       result[item.month] = tasksArray;
     });
 
     return result;
-  }
+  };
 
-  const [openMonth, setOpenMonth] = useState(null);
-
-  const handleMonthClick = (month) => {
+  const handleMonthClick = (month: string) => {
     setOpenMonth(openMonth === month ? null : month); // Toggle dropdown visibility
     setSelectedMonth(month);
   };
 
-  const handleTaskChange = (month, taskId) => {
+  const handleTaskChange = (month: string, taskId: number) => {
     const updatedTasks = tasks[month].map((task) =>
       task.id === taskId ? { ...task, checked: !task.checked } : task
     );
     setTasks((prev) => ({ ...prev, [month]: updatedTasks }));
   };
 
-  const calculateProgress = (month) => {
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setShowModal(true);
+  };
+
+  const calculateProgress = (month: string) => {
     const taskList = tasks[month] || [];
     const totalTasks = taskList.length;
     const completedTasks = taskList.filter((task) => task.checked).length;
     return totalTasks === 0 ? 0 : (completedTasks / totalTasks) * 100;
   };
 
-  const getProgressText = (month) => {
+  const getProgressText = (month: string) => {
     const taskList = tasks[month] || [];
     const totalTasks = taskList.length;
     const completedTasks = taskList.filter((task) => task.checked).length;
     return `${completedTasks}/${totalTasks}`;
   };
 
-  const isAllTasksChecked = (month) => {
-    const taskList = tasks[month] || [];
-    return taskList.length > 0 && taskList.every((task) => task.checked);
-  };
-
-  const renderProgressCircle = (percentage) => {
+  const renderProgressCircle = (percentage: number) => {
     const radius = 10;
     const strokeWidth = 3;
     const circumference = 2 * Math.PI * radius;
@@ -118,7 +136,7 @@ const TrackerComponent = () => {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-4o",
+          model: "gpt-4",
           messages: [
             {
               role: "user",
@@ -154,7 +172,9 @@ const TrackerComponent = () => {
       });
       const transformedData = transformData(parsedData.data);
       setTasks(transformedData);
+      console.log("Generated CSV data:", transformedData);
       setJsonData(parsedData.data);
+      console.log("parsedData.data:", parsedData.data);
     } catch (error) {
       console.error("Error generating CSV:", error);
     }
@@ -213,14 +233,18 @@ const TrackerComponent = () => {
                     </div>
                     <ul className="space-y-2">
                       {tasks[month].map((task) => (
-                        <li key={task.id} className="flex items-center">
+                        <li
+                          key={task.id}
+                          className="flex items-center"
+                          onClick={() => handleTaskClick(task)}
+                        >
                           <input
                             type="checkbox"
                             checked={task.checked}
                             onChange={() => handleTaskChange(month, task.id)}
-                            className="mr-2 rounded border-gray-300 bg-[#0b7b71] focus:ring-blue-[#0b7b71]"
+                            className="mr-2 rounded border-gray-300 bg-[#0b7b71] focus:ring-[#0b7b71]"
                           />
-                          <span>{task.name}</span>
+                          <span className="cursor-pointer">{task.name}</span>
                         </li>
                       ))}
                     </ul>
@@ -237,6 +261,15 @@ const TrackerComponent = () => {
           Generate CSV
         </button>
       </div>
+
+      <TaskDetailModal
+        show={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+      />
     </div>
   );
 };
