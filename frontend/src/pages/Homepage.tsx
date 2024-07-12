@@ -17,13 +17,13 @@ const HomePage: React.FC = () => {
         className="relative flex flex-col md:flex-row items-center justify-between h-screen bg-cover bg-center"
         style={{ backgroundImage: "url('./BG.svg')" }}
       >
-        <div className="flex-3 p-16 md:p-16 ml-8">
-          <h1 className="text-7xl mb-4">Uplift your XXX with</h1>
-          <h1 className="text-7xl font-bold mb-4">BrightBestie</h1>
-          <p className="text-3xl mb-4">Tagline Tagline Tagline</p>
+        <div className="flex-3 p-16 md:p-16 md:ml-8 my-auto">
+          <h1 className="text-7xl mb-3">Uplift your XXX with</h1>
+          <h1 className="text-7xl font-bold mb-6">BrightBestie</h1>
+          <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
           <button
             onClick={() => navigateConsultation()}
-            className="bg-white text-black text-2xl px-12 py-4 rounded-full mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
+            className="bg-white text-black font-medium text-2xl px-8 py-4 rounded-full mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
           >
             ChatBot
           </button>
@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
       <BusinessStats />
 
       {/* service */}
-      <div className="flex flex-col items-center justify-center h-screen bg-white py-12">
+      <div className="flex flex-col items-center justify-center h-full bg-white py-12">
         <h1 className="text-5xl font-bold mb-8">Our Services</h1>
         <div className="flex flex-col md:flex-row items-center justify-between w-full px-8">
           <div className="flex-1 p-8 flex flex-col items-center">
