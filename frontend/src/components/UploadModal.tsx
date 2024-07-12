@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
 import Upload from "./Upload";
+import { toast } from "react-hot-toast";
 
 interface Task {
   id: number;
@@ -15,42 +15,41 @@ interface UploadModalProps {
 }
 
 const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
-  const [verdict, serVerdict] = useState<number>(0);
+  const [imageSrc, setImageSrc] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
 
-  //   useEffect(() => {
-  //     if (show && task) {
-  //       const fetchVerdict = async () => {
-  //         try {
-  //           const response = await axios.post(
-  //             "https://api.openai.com/v1/chat/completions",
-  //             {
-  //               model: "gpt-4",
-  //               messages: [
-  //                 {
-  //                   role: "user",
-  //                   content: `Please look at the image and see if the ${task.name} task is considered completed or not based on the image`,
-  //                 },
-  //               ],
-  //             },
-  //             {
-  //               headers: {
-  //                 "Content-Type": "application/json",
-  //                 Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-  //               },
-  //             }
-  //           );
+  const handleFileUpload = (file: Blob) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        setImageSrc(e.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
-  //           const content = response.data.choices[0].message.content;
-  //           setVerdict(content);
-  //         } catch (error) {
-  //           console.error("Error fetching verdict:", error);
-  //         }
-  //       };
+  const handleSubmit = async () => {
+    const loadingToast = toast.loading("Loading...");
 
-  //       fetchVerdict();
-  //     }
-  //   }, [show, task]);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const isSuccess = Math.random() < 0.8;
+
+      if (isSuccess) {
+        toast.success("Proof verified!", {
+          id: loadingToast,
+        });
+        onClose();
+      } else {
+        throw new Error("Prediction failure");
+      }
+    } catch (error) {
+      toast.error("Proof invalid!", {
+        id: loadingToast,
+      });
+    }
+  };
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -83,21 +82,35 @@ const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
         style={{ minWidth: "70vw" }}
       >
         <div className="border-b px-4 py-2 flex justify-between items-center">
-          <h3 className="text-lg font-semibold">{task?.name}</h3>
+          <h3 className="text-lg font-semibold">Upload Proof</h3>
           <button onClick={onClose} className="text-black text-2xl">
             &times;
           </button>
         </div>
-        <div className="p-4 space-y-4 text-gray-700">
-          <Upload />
-          <p className="whitespace-pre-wrap">Ini harusnya</p>
+        <div className="p-4 text-gray-700 h-full overflow-y-auto hide-scrollbar">
+          <div className="text-md font-bold mb-0.5">Task: </div>
+          <div className="text-sm font-medium mb-2">{task?.name}</div>
+          <div className="text-md font-bold mb-1">Upload: </div>
+          <Upload onFileUpload={handleFileUpload} />
+          {imageSrc ? (
+            <div className="rounded-md border-dashed border-2 border-[#d1d5db] mt-2 flex justify-center items-center">
+              <img
+                src={imageSrc}
+                alt="Uploaded"
+                className="rounded-md max-h-80 w-auto"
+              />
+            </div>
+          ) : (
+            <div className="h-8 rounded-md border-dashed border-2 border-[#d1d5db] mt-2"></div>
+          )}
         </div>
+
         <div className="border-t px-4 py-2 flex justify-end">
           <button
-            onClick={onClose}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={handleSubmit}
+            className="bg-[#0b7b71] text-white px-4 py-2 rounded hover:bg-[#055851]"
           >
-            Close
+            Submit
           </button>
         </div>
       </div>
