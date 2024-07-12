@@ -1,6 +1,9 @@
+import React from "react";
+import Lottie from "lottie-react";
+import Toga from "../assets/lottie/toga.json";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
-const tiers = [
+const services = [
   {
     name: "Tasks Tracker",
     id: "task-tracker",
@@ -43,7 +46,7 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 export default function Example() {
   return (
-    <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="relative isolate bg-white px-6 py-12 lg:px-8">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl"
@@ -56,61 +59,72 @@ export default function Example() {
           className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#FFF0C8] opacity-30"
         />
       </div>
-      <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-        <h2 className="text-base font-semibold leading-7 text-[#0b7b71]">
-          Our Services
-        </h2>
-        <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          The right plan for uplifting your journey
-        </p>
-      </div>
-      <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-        kata kata hari ini
-      </p>
-      <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        {tiers.map((tier, tierIdx) => (
-          <div
-            key={tier.id}
-            className={classNames(
-              tier.mostPopular ? "lg:z-10 lg:rounded-b-none" : "lg:mt-8",
-              tierIdx === 0 ? "lg:rounded-r-none" : "",
-              tierIdx === tiers.length - 1 ? "lg:rounded-l-none" : "",
-              "flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10"
-            )}
-          >
-            <div>
-              <div className="flex items-center justify-between gap-x-4">
-                <h3
-                  id={tier.id}
-                  className={classNames(
-                    tier.mostPopular ? "text-[#0b7b71]" : "text-gray-900",
-                    "text-lg font-semibold leading-8"
-                  )}
-                >
-                  {tier.name}
-                </h3>
-              </div>
-              <p className="mt-4 text-sm leading-6 text-gray-600">
-                {tier.description}
-              </p>
-
-              <ul
-                role="list"
-                className="mt-8 space-y-3 text-sm leading-6 text-gray-600"
-              >
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex gap-x-3">
-                    <CheckIcon
-                      aria-hidden="true"
-                      className="h-6 w-5 flex-none text-[#0b7b71]"
-                    />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className="flex flex-row items-center justify-center">
+        <Lottie
+          animationData={Toga}
+          style={{ width: "200px", height: "200px" }}
+          loop={true}
+        />
+        <div className="flex flex-col items-center justify-center gap-y-4 ml-16">
+          <div className="text-left lg:max-w-4xl">
+            <h2 className="text-base font-semibold leading-7 text-[#0b7b71]">
+              Our Services
+            </h2>
+            <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              The right plan for uplifting your journey
+            </p>
           </div>
-        ))}
+          <p className="mt-6 w-full text-left text-lg leading-8 text-gray-600">
+            kata kata hari ini
+          </p>
+        </div>
+      </div>
+      <div className="w-full flex justify-center align-center">
+        <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 lg:mx-0 lg:max-w-6xl lg:grid-cols-3">
+          {services.map((service, serviceIdx) => (
+            <div
+              key={service.id}
+              className={classNames(
+                service.mostPopular ? "lg:z-10 lg:rounded-b-none" : "lg:mt-8",
+                serviceIdx === 0 ? "lg:rounded-r-none" : "",
+                serviceIdx === services.length - 1 ? "lg:rounded-l-none" : "",
+                "flex flex-col justify-between rounded-3xl bg-white p-6 ring-1 ring-gray-200"
+              )}
+            >
+              <div>
+                <div className="flex items-center justify-between gap-x-4">
+                  <h3
+                    id={service.id}
+                    className={classNames(
+                      service.mostPopular ? "text-[#0b7b71]" : "text-gray-900",
+                      "text-lg font-semibold leading-8"
+                    )}
+                  >
+                    {service.name}
+                  </h3>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-gray-600">
+                  {service.description}
+                </p>
+
+                <ul
+                  role="list"
+                  className="mt-8 space-y-3 text-sm leading-6 text-gray-600"
+                >
+                  {service.features.map((feature) => (
+                    <li key={feature} className="flex gap-x-3">
+                      <CheckIcon
+                        aria-hidden="true"
+                        className="h-6 w-5 flex-none text-[#0b7b71]"
+                      />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

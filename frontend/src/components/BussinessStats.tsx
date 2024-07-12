@@ -15,18 +15,24 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon }) => {
       delay: 200,
       config: { mass: 1, tension: 20, friction: 10 },
     });
-    return <animated.div>
-      {number.to((n) => new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(n))}
-    </animated.div>;
+    return (
+      <animated.div>
+        {number.to((n) =>
+          new Intl.NumberFormat("en-US", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          }).format(n)
+        )}
+      </animated.div>
+    );
   }
   return (
     <div className="flex items-center space-x-4">
       <div className="text-green-500">{icon}</div>
       <div>
-        <p className="text-xl font-semibold"><Number n={value}></Number></p>
+        <p className="text-xl font-semibold">
+          <Number n={value}></Number>
+        </p>
         <p className="text-gray-500">{title}</p>
       </div>
     </div>
@@ -34,11 +40,10 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon }) => {
 };
 
 const BusinessStats: React.FC = () => {
-
   return (
     <div className="w-full bg-gray-50 px-16">
-      <div className="flex flex-col mx-auto md:flex-row items-center justify-between py-12 px-4 md:px-0">
-        <div className="mb-8 md:mb-0 md:mr-8">
+      <div className="flex flex-col mx-auto md:flex-row items-center justify-between py-8 px-4 md:px-0">
+        <div className="mb-8 md:mb-0 md:mr-8 max-w-2xl">
           <h2 className="text-3xl font-bold mb-4">
             Your <span style={{ color: "#0b7b71" }}>friend</span> in accessing
             educational opportunities
