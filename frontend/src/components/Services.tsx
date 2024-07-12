@@ -81,9 +81,9 @@ export default function Example() {
               Success plan, tailored for you
             </p>
           </div>
-          <p className="mt-6 w-full text-left text-lg leading-8 text-gray-600">
-            kata kata hari ini
-          </p>
+{/*           <p className="mt-6 w-full text-left text-lg leading-8 text-gray-600">
+          Your present circumstances don't determine where you can go; they merely determine where you start.
+          </p> */}
         </div>
       </div>
       <div className="w-full flex justify-center align-center">
