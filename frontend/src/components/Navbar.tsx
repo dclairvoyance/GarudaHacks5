@@ -70,7 +70,7 @@ export default function Navbar({ hidden = false }) {
                 BrightBestie
               </h1>
             </a>
-            <div className="hidden md:ml-6 md:flex md:space-x-8">
+            <div className="hidden md:ml-6 md:flex md:space-x-4">
               <a href="/consultation" className={getLinkClass("/consultation")}>
                 Chatbot
               </a>
@@ -153,7 +153,7 @@ export default function Navbar({ hidden = false }) {
             href="/consultation"
             className={
               location.pathname === "/consultation"
-                ? "block border-l-4 border-[#0b7b71] bg-[#a4f7f0] py-2 pl-3 pr-4 text-base font-medium text-indigo-700 sm:pl-5 sm:pr-6"
+                ? "block border-l-4 border-[#0b7b71] bg-[#fff0c8] py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6"
                 : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
             }
           >
@@ -164,7 +164,7 @@ export default function Navbar({ hidden = false }) {
             href="/articles"
             className={
               location.pathname === "/articles"
-                ? "block border-l-4 border-[#0b7b71] bg-[#a4f7f0] py-2 pl-3 pr-4 text-base font-medium text-indigo-700 sm:pl-5 sm:pr-6"
+                ? "block border-l-4 border-[#0b7b71] bg-[#fff0c8] py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6"
                 : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
             }
           >

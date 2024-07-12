@@ -23,6 +23,7 @@ interface Message {
 
 const ChatBot: React.FC = () => {
   const navigate = useNavigate();
+  const lastMessageRef = useRef(null);
   const initialPrompt: Message = {
     id: 0,
     role: "user",
@@ -62,7 +63,8 @@ const ChatBot: React.FC = () => {
   const initialMessage: Message = {
     id: 1,
     role: "assistant",
-    content: "Hello! How can I assist you today?",
+    content:
+      "Hello! I can help you plan your study path all the way up to college and beyond! Let's start by gathering some info about you. First question: What grade are you currently in? 😊🎓?",
   };
 
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
@@ -238,6 +240,14 @@ const ChatBot: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      (lastMessageRef.current as unknown as HTMLDivElement).scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 100);
+  }, [messages]);
+
   return (
     <>
       <Navbar hidden />
@@ -251,7 +261,7 @@ const ChatBot: React.FC = () => {
           </div>
           <div className="ml-4">
             <div className="font-bold">Your BrightBestie</div>
-            <div className="text-sm text-gray-500">Online</div>
+            <div className="text-sm text-gray-500">2 Min</div>
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -265,8 +275,8 @@ const ChatBot: React.FC = () => {
               <div
                 className={`p-3 max-w-[70%] ${
                   message.role === "user"
-                    ? "self-end text-xs text-white text-right"
-                    : "self-start text-xs text-black text-left"
+                    ? "self-end text-white text-right"
+                    : "self-start text-black text-left"
                 }`}
                 style={{
                   backgroundColor:
@@ -281,6 +291,7 @@ const ChatBot: React.FC = () => {
               </div>
             </div>
           ))}
+          <div ref={lastMessageRef}></div>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -291,13 +302,19 @@ const ChatBot: React.FC = () => {
             value={input}
             onChange={handleInputChange}
             placeholder="Type a message"
+            onKeyPress={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
             className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
             rows={textareaRows}
             style={{ lineHeight: "24px" }}
           />
           <button
             type="submit"
-            className="ml-2 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className="ml-2 p-3 bg-[#0b7b71] text-white rounded-lg hover:bg-[#055851] transition-colors"
           >
             Send
           </button>
