@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
       <div className="flex flex-col w-full bg-white">
         {/* landing page */}
         <div
-          className="relative flex flex-col md:flex-row items-center justify-between h-screen bg-cover bg-center"
+          className="relative flex flex-col md:flex-row items-center justify-between h-[calc(100vh-4rem)] bg-cover bg-center"
           style={{ backgroundImage: "url('./BG.svg')" }}
         >
           <div className="flex-2 p-16 md:p-16 md:ml-8 my-auto">

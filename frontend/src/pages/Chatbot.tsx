@@ -251,7 +251,7 @@ const ChatBot: React.FC = () => {
   return (
     <>
       <Navbar hidden />
-      <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg bg-white shadow-md flex flex-col h-[100vh]">
+      <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg bg-white shadow-md flex flex-col h-[100vh] -mt-16">
         <div
           className="flex items-center p-2"
           style={{ backgroundColor: "#FFF0C8" }}
