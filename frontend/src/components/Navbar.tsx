@@ -59,7 +59,9 @@ export default function Navbar() {
                 type="button"
                 className="relative inline-flex items-center gap-x-1.5 rounded-md bg-[#0b7b71] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-bg-[#0b7b71] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Login
+                <a href="/login">
+                  Login
+                </a>
               </button>
             </div>
             <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
