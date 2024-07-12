@@ -159,7 +159,7 @@ const TrackerComponent: React.FC = () => {
               className="text-3xl font-extrabold text-center mb-6"
               style={{ color: "#0b7b71" }}
             >
-              Monthly Tracker
+              Tracker Pal
             </h1>
             <div className="relative h-full overflow-y-auto bg-white p-4 rounded-lg shadow-md scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-[#f8e4ad] scrollbar-track-gray-50">
               <div className="bg-white p-6">

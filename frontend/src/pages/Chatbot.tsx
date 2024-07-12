@@ -260,7 +260,7 @@ const ChatBot: React.FC = () => {
             <Lottie animationData={chatbotAnimation} loop={true} />
           </div>
           <div className="ml-4">
-            <div className="font-bold">Your BrightBestie</div>
+            <div className="font-bold">Your ConsultBuddy.AI</div>
             <div className="text-sm text-gray-500">🟢 Online</div>
           </div>
         </div>

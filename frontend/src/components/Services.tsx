@@ -5,7 +5,7 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 
 const services = [
   {
-    name: "Tasks Tracker",
+    name: "Tracker Pal",
     id: "task-tracker",
     href: "#",
     description: "Essential tools for task management and productivity.",
@@ -18,10 +18,10 @@ const services = [
     mostPopular: false,
   },
   {
-    name: "AI-Driven Consultation",
+    name: "ConsultBuddy.AI",
     id: "consultation",
     href: "#",
-    description: "Get personalized consultation with AI-driven insights.",
+    description: "Get personalized consultation from your Buddy with AI-driven insights.",
     features: [
       "University recommendations",
       "Scholarship information",
