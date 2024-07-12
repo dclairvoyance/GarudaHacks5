@@ -256,7 +256,7 @@ const TrackerComponent: React.FC = () => {
                             <input
                               type="checkbox"
                               checked={task.checked}
-                              onChange={() => handleTaskChange(month, task.id)}
+                              // onChange={() => handleTaskChange(month, task.id)}
                               className="mr-2 rounded border-gray-300 checked:bg-[#0b7b71] focus:ring-[#0b7b71]"
                             />
                             <span
