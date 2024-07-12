@@ -12,16 +12,18 @@
   "dependencies": {
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@natscale/react-calendar": "^0.0.0-beta.26",
     "axios": "^1.7.2",
     "dompurify": "^3.1.6",
     "flowbite": "^2.4.1",
     "jsdom": "^24.1.0",
+    "lottie-react": "^2.4.0",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
-    "react-spring": "^9.7.3",
     "react-spinners": "^0.14.1",
+    "react-spring": "^9.7.3",
     "tailwind-scrollbar": "^3.1.0"
   },
   "devDependencies": {

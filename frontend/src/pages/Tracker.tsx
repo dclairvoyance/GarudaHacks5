@@ -4,6 +4,8 @@ import axios from "axios";
 import TaskDetailModal from "../components/TaskDetailsModal";
 import Upload from "../components/Upload";
 import UploadModal from "../components/UploadModal";
+import CustomCalendar from "../components/CustomCalendar";
+import Reminder from "../components/Reminder";
 
 interface Task {
   id: number;
@@ -198,10 +200,14 @@ const TrackerComponent: React.FC = () => {
 
   return (
     <div
-      className="relative w-full items-center justify-between h-screen bg-cover bg-center"
+      className="relative flex w-full items-center justify-between h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('./BG2.svg')" }}
     >
-      <div className="p-6 max-w-3xl mx-auto bg-[#ffffff] shadow-lg rounded-lg h-screen">
+      <div className="p-6 w-[50%] my-auto">
+        <CustomCalendar />
+        <Reminder remainingDays={5} remainingTasks={3} />
+      </div>
+      <div className="p-6 w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-screen">
         <h1
           className="text-3xl font-extrabold text-center mb-6"
           style={{ color: "#0b7b71" }}
