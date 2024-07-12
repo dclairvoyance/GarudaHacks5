@@ -55,6 +55,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
   };
 
   useEffect(() => {
+    setImageSrc("");
+    setError("");
     const handleOutsideClick = (event: MouseEvent) => {
       if (
         modalRef.current &&
