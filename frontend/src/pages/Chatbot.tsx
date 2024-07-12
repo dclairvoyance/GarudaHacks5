@@ -7,10 +7,11 @@ import React, {
 } from "react";
 import axios from "axios";
 import Papa from "papaparse";
-import Markdown from 'react-markdown'
+import Markdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
 
-import ChatbotProfileImage from "../assets/chatbot-profile.svg";
+import Lottie from "lottie-react";
+import chatbotAnimation from "../assets/lottie/chatbot.json";
 
 interface Message {
   id: number;
@@ -19,18 +20,17 @@ interface Message {
 }
 
 const ChatBot: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const initialPrompt: Message = {
     id: 0,
     role: "user",
-/*     content: `Buatkan tracker bulanan untuk persiapan beasiswa GKS dari sekarang kelas 10 semester 1 sampai kelas 12 semester 2.
+    /*     content: `Buatkan tracker bulanan untuk persiapan beasiswa GKS dari sekarang kelas 10 semester 1 sampai kelas 12 semester 2.
                  Kondisi saat ini, saya tinggal di Ternate, membutuhkan beasiswa, nilai rapor saya rata-rata 95, dan belum mahir berbahasa inggris.
                  Usahakan tracker mengandung nilai kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10. 
                  Detailkan pula setiap dokumen syarat pendaftaran. 
                  Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
                  Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV nya.` */
-    content:
-      `Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi 
+    content: `Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi 
       saya hingga perkuliahan lanjut. Mekanismenya adalah sebagai berikut. Anda akan bertanya ke saya, 
       kemudian saya menjawab, kemudian anda bertanya lagi dan seterusnya. Ingat, hanya satu pertanyaan, 
       kemudian jawaban, kemudian satu pertanyaan lagi. Anda harus menggali informasi lebih lanjut mengenai 
@@ -54,7 +54,7 @@ const ChatBot: React.FC = () => {
         Detailkan pula setiap dokumen syarat pendaftaran beasiswa dan / atau pendaftaran universitas. 
         Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
         Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV. Jika anda ingin mulai menulis CSV, gunakan penanda "ABCDE"`,
-      // TODO: add prompt
+    // TODO: add prompt
   };
 
   const initialMessage: Message = {
@@ -94,17 +94,17 @@ const ChatBot: React.FC = () => {
 
   function transformData(data) {
     const result = {};
-  
+
     data.forEach((item, index) => {
-      const tasksArray = item.tasks.split(';').map((task, taskIndex) => ({
+      const tasksArray = item.tasks.split(";").map((task, taskIndex) => ({
         id: index * 100 + taskIndex + 1,
         name: task.trim(),
         checked: false,
       }));
-  
+
       result[item.month] = tasksArray;
     });
-  
+
     return result;
   }
 
@@ -114,39 +114,39 @@ const ChatBot: React.FC = () => {
 
   function cleanText(text) {
     // Replace all newline characters with a space
-    let cleanedText = text.replace(/[\r\n]+/g, ' ');
-    
+    let cleanedText = text.replace(/[\r\n]+/g, " ");
+
     // Remove unnecessary spaces at the end of each line
-    cleanedText = cleanedText.replace(/\s+$/gm, '');
-    
+    cleanedText = cleanedText.replace(/\s+$/gm, "");
+
     // Replace multiple spaces with a single space
-    cleanedText = cleanedText.replace(/\s\s+/g, ' ');
-  
+    cleanedText = cleanedText.replace(/\s\s+/g, " ");
+
     // Trim leading and trailing spaces
     cleanedText = cleanedText.trim();
-  
+
     return cleanedText;
   }
 
   function splitText(text, searchString) {
     // Find the index of the search string in the text
     const index = text.indexOf(searchString);
-  
+
     // If the search string is not found, return the original text as the first part and an empty string as the second part
     if (index === -1) {
-        return [text, ""];
+      return [text, ""];
     }
 
     // Extract the part before the search string
     const part1 = cleanText(text.substring(0, index).trim());
-    
+
     // Extract the part after the search string
     const part2 = text.substring(index + searchString.length).trim();
-    const regex = new RegExp(searchString, 'g');
-  
+    const regex = new RegExp(searchString, "g");
+
     // Replace all occurrences of the search string with an empty string
-    const result = part2.replace(regex, '');
-  
+    const result = part2.replace(regex, "");
+
     return [part1, result];
   }
 
@@ -185,49 +185,49 @@ const ChatBot: React.FC = () => {
 
       const botMessage: Message = response.data.choices[0].message;
       if (botMessage.content.includes("ABCDE")) {
-        let result = splitText(botMessage.content, "ABCDE")
-        console.log(result)
+        let result = splitText(botMessage.content, "ABCDE");
+        console.log(result);
         let message: Message = {
-            id: 100,
-            content: result[0],
-            role: "assistant"
-        }
+          id: 100,
+          content: result[0],
+          role: "assistant",
+        };
         //const charactersToRemove = "qwertyuiopasdfghjklzxcvbnm";
         setMessages([...updatedMessages, message]);
         // Create a regular expression pattern with global and case-insensitive flags
         //const regex = new RegExp(`[${charactersToRemove}]`, 'gi');
-        
+
         // Replace the characters with an empty string
         //const cleanedText = response.data.choices[0].message.content.replace(regex, '');
 
         const csvContent = result[1];
-  
+
         const formattedCSVContent = csvContent.replace(
           /(".*?")/g,
           (match: string) => {
             return match.replace(/,/g, ";");
           }
         );
-  
+
         const parsedData = Papa.parse(formattedCSVContent, {
           header: true,
           skipEmptyLines: true,
         });
 
         let messageFinal: Message = {
-            id: 101,
-            content: "Tracker has been generated. You will be redirected to tracker page within 3 seconds. If you are not login yet, please login first.",
-            role: "assistant"
-        }
+          id: 101,
+          content:
+            "Tracker has been generated. You will be redirected to tracker page within 3 seconds. If you are not login yet, please login first.",
+          role: "assistant",
+        };
         setMessages([...updatedMessages, messageFinal]);
         setTimeout(() => {
-            navigate("/login");
+          navigate("/login");
         }, 3000);
-        
+
         let transformedData = transformData(parsedData.data);
         transformedData = JSON.stringify(transformedData);
-        localStorage.setItem('data', transformedData)
-
+        localStorage.setItem("data", transformedData);
       } else {
         setMessages([...updatedMessages, botMessage]);
       }
@@ -239,17 +239,15 @@ const ChatBot: React.FC = () => {
   return (
     <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg bg-white shadow-md flex flex-col h-[100vh]">
       <div
-        className="flex items-center p-4"
+        className="flex items-center p-2"
         style={{ backgroundColor: "#FFF0C8" }}
       >
-        <img
-          src={ChatbotProfileImage}
-          alt="Avatar"
-          className="w-16 h-16 rounded-full"
-        />
+        <div className="w-24 h-24">
+          <Lottie animationData={chatbotAnimation} loop={true} />
+        </div>
         <div className="ml-4">
           <div className="font-bold">Your BrightBestie</div>
-          <div className="text-sm text-gray-500">2 Min</div>
+          <div className="text-sm text-gray-500">Online</div>
         </div>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -275,10 +273,7 @@ const ChatBot: React.FC = () => {
                     : "20px 20px 20px 0px", // Rounded except bottom left
               }}
             >
-                <Markdown>
-                    {message.content}
-                </Markdown>
-              
+              <Markdown>{message.content}</Markdown>
             </div>
           </div>
         ))}
