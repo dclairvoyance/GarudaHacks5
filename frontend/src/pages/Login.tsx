@@ -62,7 +62,9 @@ const LoginPage = () => {
                 className="w-3/12 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300 text-center"
                 style={{backgroundColor: "#2F8CAD"}}
               >
-                Login
+                <a href="/tracker">
+                  Login
+                </a>
               </button>
             </div>
           </form>
