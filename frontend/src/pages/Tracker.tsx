@@ -146,7 +146,7 @@ const TrackerComponent: React.FC = () => {
     <>
       <Navbar hidden />
       <div
-        className="relative flex w-full items-center justify-between h-screen bg-cover bg-center"
+        className="relative flex w-full items-center justify-between h-screen bg-cover bg-center -mt-16"
         style={{ backgroundImage: "url('./BG2.svg')" }}
       >
         <div className="p-6 w-[50%] my-auto">
