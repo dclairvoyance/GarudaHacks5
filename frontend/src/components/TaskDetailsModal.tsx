@@ -39,7 +39,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               messages: [
                 {
                   role: "user",
-                  content: `Provide detailed information about the task: ${task.name}. Include a description, an action plan (maximum 7 poin), and any important notes (maximum 3 poin).`,
+                  content: `Provide detailed information about the task: ${task.name}. Include a description, an action plan (max 7 point, each max 30 words), and any important notes (max 3 point).`,
                 },
               ],
             },
@@ -145,11 +145,16 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
           </div>
           <div className="text-gray-700">
             <h4 className="font-semibold">Action Plan</h4>
-            <ul className="list-disc ml-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {details.action_plan.map((item, index) => (
-                <li key={index}>{item}</li>
+                <div
+                  key={index}
+                  className="p-4 bg-[#f8e4ad] rounded-lg shadow-md"
+                >
+                  {item}
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
           <div className="text-gray-700">
             <h4 className="font-semibold">Important Notes</h4>
