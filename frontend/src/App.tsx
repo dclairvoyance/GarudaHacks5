@@ -5,6 +5,7 @@ import Articles from "./pages/Articles";
 import ChatBot from "./pages/Chatbot";
 import HomePage from "./pages/Homepage";
 import TrackerComponent from "./pages/Tracker";
+import RegisterPage from "./pages/Register";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<h1>Test</h1>} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/consultation" element={<ChatBot />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/tracker" element={<TrackerComponent />} />

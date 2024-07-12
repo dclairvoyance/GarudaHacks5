@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ChatbotImage from "../assets/chatbot.svg";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleLogin = (e: React.FormEvent) => {
@@ -21,8 +22,8 @@ const LoginPage = () => {
         <div className="flex items-center justify-center flex-1 h-screen"
         style={{ backgroundImage: "url('./BG-education.svg')"}}>
           <div className="p-8 rounded-lg w-full max-w-xl">
-          <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back to BrightBestie!</h2>
-          <p className="font-medium text-center mb-6">Explore the latest scholarship opportunities, personalized study materials, and track your progress with ease.</p>
+          <h2 className="text-2xl font-bold mb-6 text-center">Join BrightBestie Today!</h2>
+          <p className="font-medium text-center mb-6">Unlock your personalized consultations and study materials to uplift your journey</p>
           <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label
@@ -36,6 +37,22 @@ const LoginPage = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="username"
+                className="block text-gray-700 font-semibold mb-2"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                 required
               />
@@ -62,11 +79,11 @@ const LoginPage = () => {
                 className="w-3/12 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300 text-center"
                 style={{backgroundColor: "#2F8CAD"}}
               >
-                Login
+                Register
               </button>
             </div>
           </form>
-          <p className="font-medium text-center mt-6">If you don't have account, please register <a className="hover:text-blue-500" href="/register">here</a></p>
+          <p className="font-medium text-center mt-6">If you already have account, please login <a className="hover:text-blue-500" href="/login">here</a></p>
         </div>
         </div>
         
@@ -83,4 +100,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
