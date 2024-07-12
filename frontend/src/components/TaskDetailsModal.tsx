@@ -45,7 +45,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                    "${task.name}". Tugas anda adalah, buatlah rancangan pembelajaran yang runut. Berikan deskripsi singkat mengenai apa yang harus dia lakukan pada section description. Berikan action plan apa saja langkah-langkah yang harus dia lakukan (maksimal 7 poin, 30 kata) dalam section action plan.
                    Berikan pula sumber pembelajaran yang gratis dan berikan link nya. Jika ada, berikan catatan penting yang perlu diketahui siswa, maksimal sebanyak 3 poin pada action notes. 
                    Ingat, anda adalah guru yang baik, sehingga anda ingin membuat proses pembelajaran menjadi mudah, runut, tetapi tetap lengkap. Berikan dalam bahasa Inggris. 
-                   Bagi dalam 3 section, yaitu description, action plan, dan important notes. Jika ada linknya, bungkuslah dalam tag HTML <a></a> dan berikan warna biru dengan tailwind dan href nya adalah link tersebut.`,
+                   Bagi dalam 3 section, yaitu description, action plan, dan important notes. Jika ada linknya, bungkuslah dalam tag HTML <a></a> dan berikan warna biru dengan tailwind dan href nya adalah link tersebut. Berikan pula target _blank pada tag tersebut.`,
               },
             ],
           },
@@ -200,7 +200,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               <h4 className="font-semibold mb-1">Important Notes</h4>
               <ul className="list-disc ml-5">
                 {details?.important_notes.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li key={index}> {<div dangerouslySetInnerHTML={{ __html: item }} />}</li>
                 ))}
               </ul>
             </div>

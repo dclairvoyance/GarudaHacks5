@@ -216,12 +216,12 @@ const ChatBot: React.FC = () => {
 
         let messageFinal: Message = {
             id: 101,
-            content: "Tracker has been generated. You will be redirected to tracker page within 3 seconds.",
+            content: "Tracker has been generated. You will be redirected to tracker page within 3 seconds. If you are not login yet, please login first.",
             role: "assistant"
         }
         setMessages([...updatedMessages, messageFinal]);
         setTimeout(() => {
-            navigate("/tracker");
+            navigate("/login");
         }, 3000);
         
         let transformedData = transformData(parsedData.data);

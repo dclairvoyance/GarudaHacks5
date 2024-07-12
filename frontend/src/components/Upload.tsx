@@ -2,16 +2,23 @@
 
 import React from "react";
 
-const Upload = () => {
+const Upload = ({ onFileUpload }) => {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && onFileUpload) {
+      onFileUpload(file);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center w-full">
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+        className="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+        <div className="flex flex-col items-center justify-center">
           <svg
-            className="w-8 h-8 mb-4 text-gray-500"
+            className="w-8 h-8 mb-2 text-gray-500"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -33,7 +40,12 @@ const Upload = () => {
             SVG, PNG, JPG or GIF (MAX. 800x400px)
           </p>
         </div>
-        <input id="dropzone-file" type="file" className="hidden" />
+        <input
+          id="dropzone-file"
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </label>
     </div>
   );
