@@ -23,17 +23,17 @@ const TrackerComponent = () => {
 
   function transformData(data) {
     const result = {};
-  
+
     data.forEach((item, index) => {
-      const tasksArray = item.tasks.split(';').map((task, taskIndex) => ({
+      const tasksArray = item.tasks.split(";").map((task, taskIndex) => ({
         id: index * 100 + taskIndex + 1,
         name: task.trim(),
         checked: false,
       }));
-  
+
       result[item.month] = tasksArray;
     });
-  
+
     return result;
   }
 
@@ -100,7 +100,7 @@ const TrackerComponent = () => {
               cx="12"
               cy="12"
               r={radius}
-              stroke="blue"
+              stroke="#0b7b71"
               strokeWidth={strokeWidth}
               fill="none"
               strokeDasharray={circumference}
@@ -161,64 +161,82 @@ const TrackerComponent = () => {
   };
 
   return (
-    <div className="p-6 w-9/12 mx-auto">
-      <h1 className="text-2xl font-bold mb-4">ToDo Progress</h1>
-      <div className="relative">
-        <div className="bg-gray-200 p-4 rounded shadow-md">
-          {Object.keys(tasks).map((month) => (
-            <div key={month} className="mb-2">
-              <button
-                className={`w-full text-left px-4 py-2 rounded flex items-center justify-between ${
-                  openMonth === month ? "bg-gray-300" : "bg-gray-200"
-                } focus:outline-none`}
-                onClick={() => handleMonthClick(month)}
-              >
-                <div className="flex items-center">
-                  {renderProgressCircle(calculateProgress(month))}
-                  <span className="font-semibold">{month}</span>
-                </div>
-                <span className="ml-2 text-gray-600">
-                  {getProgressText(month)}
-                </span>
-              </button>
-              {openMonth === month && (
-                <div className="mt-2 pl-4">
-                  <div className="relative mb-4">
-                    <div className="bg-gray-200 h-4 rounded mr-16">
-                      <div
-                        className="bg-blue-500 h-4 rounded"
-                        style={{ width: `${calculateProgress(month)}%` }}
-                      />
-                    </div>
-                    <span className="absolute top-0 right-0 text-xs text-blue-500">
-                      {Math.round(calculateProgress(month))}%
+    <div
+      className="relative w-full items-center justify-between h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('./BG2.svg')" }}
+    >
+      <div className="p-6 max-w-3xl mx-auto bg-[#ffffff] shadow-lg rounded-lg h-screen">
+        <h1
+          className="text-3xl font-extrabold text-center mb-6"
+          style={{ color: "#0b7b71" }}
+        >
+          Monthly Tracker
+        </h1>
+        <div className="relative h-[75vh] overflow-y-auto bg-white p-4 rounded-lg shadow-md scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-[#f8e4ad] scrollbar-track-gray-50">
+          <div className="bg-white p-6">
+            {Object.keys(tasks).map((month) => (
+              <div key={month} className="mb-4">
+                <button
+                  className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between transition-colors ${
+                    openMonth === month ? "bg-[#FFF0C8]" : "bg-white"
+                  } hover:bg-[#f8e4ad] focus:outline-none`}
+                  onClick={() => handleMonthClick(month)}
+                >
+                  <div className="flex items-center">
+                    {renderProgressCircle(calculateProgress(month))}
+                    <span className="font-semibold text-gray-800 ml-2">
+                      {month}
                     </span>
                   </div>
-                  <ul>
-                    {tasks[month].map((task) => (
-                      <li key={task.id} className="mb-2 flex items-center">
-                        <input
-                          type="checkbox"
-                          checked={task.checked}
-                          onChange={() => handleTaskChange(month, task.id)}
-                          className="mr-2"
+                  <span className="ml-2 text-gray-600">
+                    {getProgressText(month)}
+                  </span>
+                </button>
+                {openMonth === month && (
+                  <div className="mt-3 pl-4">
+                    <div className="relative mb-4">
+                      <div className="bg-gray-300 h-4 rounded-full overflow-hidden">
+                        <div
+                          className="h-4 rounded-full"
+                          style={{
+                            background: "#0b7b71",
+                            width: `${calculateProgress(month)}%`,
+                          }}
                         />
-                        <span>{task.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
+                      </div>
+                      <span
+                        className="absolute top-0 right-0 text-xs"
+                        style={{ background: "#0b7b71" }}
+                      >
+                        {Math.round(calculateProgress(month))}%
+                      </span>
+                    </div>
+                    <ul className="space-y-2">
+                      {tasks[month].map((task) => (
+                        <li key={task.id} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={task.checked}
+                            onChange={() => handleTaskChange(month, task.id)}
+                            className="mr-2 rounded border-gray-300 bg-[#0b7b71] focus:ring-blue-[#0b7b71]"
+                          />
+                          <span>{task.name}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
+        <button
+          onClick={handleGenerateTracker}
+          className="w-full p-3 mt-6 bg-[#0b7b71] text-white rounded-lg hover:bg-[#055851] transition-colors"
+        >
+          Generate CSV
+        </button>
       </div>
-      <button
-        onClick={handleGenerateTracker}
-        className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors0"
-      >
-        Generate CSV
-      </button>
     </div>
   );
 };

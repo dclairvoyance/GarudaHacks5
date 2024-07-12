@@ -148,8 +148,7 @@ const ChatBot: React.FC = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center p-4"
-        style={{ backgroundColor: "#FFF0C8" }}
+        className="flex items-center p-4 bg-[#FFF0C8]"
       >
         <textarea
           ref={textareaRef}
