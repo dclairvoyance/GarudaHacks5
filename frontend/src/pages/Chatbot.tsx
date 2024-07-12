@@ -9,7 +9,6 @@ import axios from "axios";
 import Papa from "papaparse";
 import Markdown from 'react-markdown'
 import { useNavigate } from "react-router-dom";
-const navigate = useNavigate();
 
 import ChatbotProfileImage from "../assets/chatbot-profile.svg";
 
@@ -20,6 +19,7 @@ interface Message {
 }
 
 const ChatBot: React.FC = () => {
+    const navigate = useNavigate();
   const initialPrompt: Message = {
     id: 0,
     role: "user",

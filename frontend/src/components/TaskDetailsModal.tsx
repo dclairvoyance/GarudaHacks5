@@ -39,7 +39,9 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               messages: [
                 {
                   role: "user",
-                  content: `Provide detailed information about the task: ${task.name}. Include a description, an action plan (max 7 point, each max 30 words), and any important notes (max 3 point).`,
+                  content: `Provide detailed information about the task: ${task.name}. 
+                  Include a description, an action plan (max 7 point, each max 30 words), 
+                  and any important notes (max 3 point).`,
                 },
               ],
             },
