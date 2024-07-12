@@ -16,7 +16,9 @@ interface UploadModalProps {
 
 const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
   const [imageSrc, setImageSrc] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
+
 
   const handleFileUpload = (file: Blob) => {
     const reader = new FileReader();
@@ -34,7 +36,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const isSuccess = Math.random() < 0.8;
+      const isSuccess = task!.id % 2 == 0;
 
       if (isSuccess) {
         toast.success("Proof verified!", {
@@ -42,7 +44,8 @@ const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
         });
         onClose();
       } else {
-        throw new Error("Prediction failure");
+        setError("You only do 5 from 10 questions!")
+        throw new Error("Proof invalid!");
       }
     } catch (error) {
       toast.error("Proof invalid!", {
@@ -103,6 +106,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ show, onClose, task }) => {
           ) : (
             <div className="h-8 rounded-md border-dashed border-2 border-[#d1d5db] mt-2"></div>
           )}
+          {error ? <div className="text-md font-bold mb-0.5 text-center text-red-500">{error}</div> : <></>}
         </div>
 
         <div className="border-t px-4 py-2 flex justify-end">
