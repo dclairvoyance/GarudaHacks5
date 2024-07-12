@@ -31,10 +31,10 @@ const services = [
     mostPopular: true,
   },
   {
-    name: "Match Mentoring",
+    name: "Super Bestie",
     id: "match-mentoring",
     href: "#",
-    description: "Connect with mentors for personal growth.",
+    description: "Connect with super bestie for personal growth.",
     features: ["Unlimited discussions", "Career advice", "Education advice"],
     mostPopular: false,
   },

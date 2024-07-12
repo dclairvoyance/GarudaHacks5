@@ -149,10 +149,10 @@ const ConnectPages: React.FC = () => {
       >
               <div className="mx-auto max-w-2xl text-center pt-20 pb-8">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Connect with People
+              Super Bestie
             </h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-              Helps Others
+            Connect with super bestie for personal growth.
             </p>
           </div>
         <div className="relative flex flex-col md:flex-row">
