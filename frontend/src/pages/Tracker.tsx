@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import axios from "axios";
 import TaskDetailModal from "../components/TaskDetailsModal";
+import Upload from "../components/Upload";
+import UploadModal from "../components/UploadModal";
 
 interface Task {
   id: number;
@@ -36,7 +38,8 @@ const TrackerComponent: React.FC = () => {
   });
 
   const [openMonth, setOpenMonth] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModalTaskDetail, setShowModalTaskDetail] = useState(false);
+  const [showModalUpload, setShowModalUpload] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const transformData = (data: any[]) => {
@@ -71,7 +74,12 @@ const TrackerComponent: React.FC = () => {
 
   const handleTaskClick = (task: Task) => {
     setSelectedTask(task);
-    setShowModal(true);
+    setShowModalTaskDetail(true);
+  };
+
+  const handleUploadClick = (task: Task) => {
+    setSelectedTask(task);
+    setShowModalUpload(true);
   };
 
   const calculateProgress = (month: string) => {
@@ -89,8 +97,8 @@ const TrackerComponent: React.FC = () => {
   };
 
   const renderProgressCircle = (percentage: number) => {
-    const radius = 10;
-    const strokeWidth = 3;
+    const radius = 9;
+    const strokeWidth = 4;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
@@ -100,7 +108,7 @@ const TrackerComponent: React.FC = () => {
           <path
             d="M5 13l4 4L19 7"
             stroke="green"
-            strokeWidth="2"
+            strokeWidth="4"
             fill="none"
             strokeLinecap="round"
           />
@@ -136,7 +144,7 @@ const TrackerComponent: React.FC = () => {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-4",
+          model: "gpt-4o",
           messages: [
             {
               role: "user",
@@ -180,6 +188,14 @@ const TrackerComponent: React.FC = () => {
     }
   };
 
+  const handleUpload = () => {
+    try {
+      console.log();
+    } catch (error) {
+      console.log("Error uploading CSV:", error);
+    }
+  };
+
   return (
     <div
       className="relative w-full items-center justify-between h-screen bg-cover bg-center"
@@ -213,38 +229,60 @@ const TrackerComponent: React.FC = () => {
                   </span>
                 </button>
                 {openMonth === month && (
-                  <div className="mt-3 pl-4">
+                  <div className="mt-3 px-4">
                     <div className="relative mb-4">
-                      <div className="bg-gray-300 h-4 rounded-full overflow-hidden">
+                      <div className="bg-gray-300 h-5 rounded-full overflow-hidden">
                         <div
-                          className="h-4 rounded-full"
+                          className="h-5 rounded-full"
                           style={{
                             background: "#0b7b71",
                             width: `${calculateProgress(month)}%`,
                           }}
                         />
                       </div>
-                      <span
-                        className="absolute top-0 right-0 text-xs"
-                        style={{ background: "#0b7b71" }}
-                      >
-                        {Math.round(calculateProgress(month))}%
-                      </span>
+                      <div className="absolute flex justify-center w-full top-0.5 text-xs">
+                        <div className="bg-[#0b7b71] rounded-sm py-0.25 px-1 text-white">
+                          {Math.round(calculateProgress(month))}%
+                        </div>
+                      </div>
                     </div>
                     <ul className="space-y-2">
                       {tasks[month].map((task) => (
                         <li
                           key={task.id}
-                          className="flex items-center"
-                          onClick={() => handleTaskClick(task)}
+                          className="flex justify-between items-center"
                         >
-                          <input
-                            type="checkbox"
-                            checked={task.checked}
-                            onChange={() => handleTaskChange(month, task.id)}
-                            className="mr-2 rounded border-gray-300 bg-[#0b7b71] focus:ring-[#0b7b71]"
-                          />
-                          <span className="cursor-pointer">{task.name}</span>
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={task.checked}
+                              onChange={() => handleTaskChange(month, task.id)}
+                              className="mr-2 rounded border-gray-300 checked:bg-[#0b7b71] focus:ring-[#0b7b71]"
+                            />
+                            <span
+                              onClick={() => handleTaskClick(task)}
+                              className="cursor-pointer"
+                            >
+                              {task.name}
+                            </span>
+                          </div>
+                          <button onClick={() => handleUploadClick(task)}>
+                            <svg
+                              className="w-6 h-6 text-black"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 20 16"
+                            >
+                              <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                              />
+                            </svg>
+                          </button>
                         </li>
                       ))}
                     </ul>
@@ -263,9 +301,18 @@ const TrackerComponent: React.FC = () => {
       </div>
 
       <TaskDetailModal
-        show={showModal}
+        show={showModalTaskDetail}
         onClose={() => {
-          setShowModal(false);
+          setShowModalTaskDetail(false);
+          setSelectedTask(null);
+        }}
+        task={selectedTask}
+      />
+
+      <UploadModal
+        show={showModalUpload}
+        onClose={() => {
+          setShowModalUpload(false);
           setSelectedTask(null);
         }}
         task={selectedTask}
