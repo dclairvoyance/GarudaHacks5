@@ -56,17 +56,17 @@ const BusinessStats: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           <StatsCard
             title="Consultations"
-            value={2245341}
+            value={245341}
             icon={<span className="text-4xl">👥</span>}
           />
           <StatsCard
             title="Scholarships Earned"
-            value={46328}
+            value={4632}
             icon={<span className="text-4xl">🎓</span>}
           />
           <StatsCard
             title="Progress Trackers"
-            value={828867}
+            value={82886}
             icon={<span className="text-4xl">📈</span>}
           />
           <StatsCard
