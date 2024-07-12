@@ -1,9 +1,9 @@
 import React from "react";
-import PeaopleImage from "../assets/People.svg";
+import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import BusinessStats from "../components/BussinessStats";
-import { useSpring, animated } from "react-spring";
 import Navbar from "../components/Navbar";
+import peopleHp from "../assets/lottie/people-hp.json";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -21,9 +21,9 @@ const HomePage: React.FC = () => {
           className="relative flex flex-col md:flex-row items-center justify-between h-screen bg-cover bg-center"
           style={{ backgroundImage: "url('./BG.svg')" }}
         >
-          <div className="flex-3 p-16 md:p-16 md:ml-8 my-auto">
-            <h1 className="text-7xl mb-3">Uplift your journey with</h1>
-            <h1 className="text-7xl font-bold mb-6">BrightBestie</h1>
+          <div className="flex-2 p-16 md:p-16 md:ml-8 my-auto">
+            <h1 className="text-5xl mb-3">Uplift your journey with</h1>
+            <h1 className="text-5xl font-bold mb-6">BrightBestie</h1>
             <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
             <button
               onClick={() => navigateConsultation()}
@@ -33,11 +33,11 @@ const HomePage: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex-2 hidden md:flex justify-center items-center">
-            <img
-              src={PeaopleImage}
-              alt="Homepage visual"
-              className="absolute bottom-0 right-8  h-[75%]"
+          <div className="flex-1 hidden md:flex justify-center items-center">
+            <Lottie
+              animationData={peopleHp}
+              style={{ width: "100%", height: "100%" }}
+              loop={true}
             />
           </div>
         </div>
