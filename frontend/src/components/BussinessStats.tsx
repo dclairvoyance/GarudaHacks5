@@ -20,8 +20,8 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon }) => {
 
 const BusinessStats: React.FC = () => {
   return (
-    <div className="w-full bg-gray-50">
-      <div className="flex flex-col max-w-7xl mx-auto md:flex-row items-center justify-between py-12 px-4 md:px-0">
+    <div className="w-full bg-gray-50 px-8">
+      <div className="flex flex-col mx-auto md:flex-row items-center justify-between py-12 px-4 md:px-0">
         <div className="mb-8 md:mb-0 md:mr-8">
           <h2 className="text-3xl font-bold mb-4">
             Your <span style={{ color: "#0b7b71" }}>friend</span> in accessing
