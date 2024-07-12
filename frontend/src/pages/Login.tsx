@@ -77,7 +77,9 @@ const LoginPage: React.FC = () => {
                   <button
                     type="submit"
                     className={`w-3/12 text-white py-2 rounded-lg transition duration-300 text-center ${
-                      loading ? "bg-blue-400" : "bg-blue-500 hover:bg-blue-600"
+                      loading
+                        ? "bg-green-500"
+                        : "bg-[#0b7b71] hover:bg-[#055851]"
                     }`}
                     disabled={loading}
                   >
@@ -110,7 +112,10 @@ const LoginPage: React.FC = () => {
               </form>
               <p className="font-medium text-center mt-6">
                 If you don't have an account, please register{" "}
-                <a className="hover:text-blue-500" href="/register">
+                <a
+                  className="text-[#0b7b71] hover:text-[#055851] font-semibold"
+                  href="/register"
+                >
                   here
                 </a>
               </p>
