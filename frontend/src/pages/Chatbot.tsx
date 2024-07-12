@@ -265,8 +265,8 @@ const ChatBot: React.FC = () => {
               <div
                 className={`p-3 max-w-[70%] ${
                   message.role === "user"
-                    ? "self-end text-white text-right"
-                    : "self-start text-black text-left"
+                    ? "self-end text-xs text-white text-right"
+                    : "self-start text-xs text-black text-left"
                 }`}
                 style={{
                   backgroundColor:
