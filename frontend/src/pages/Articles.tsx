@@ -172,6 +172,20 @@ const posts = [
   },
 ];
 
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  return date.toLocaleDateString("en-US", options);
+};
+
 const Articles = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
@@ -219,7 +233,7 @@ const Articles = () => {
 
                 <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
                   <time dateTime={post.date} className="mr-8">
-                    {post.date}
+                    {formatDate(post.date)}
                   </time>
                   <div className="-ml-4 flex items-center gap-x-4">
                     <svg
