@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BusinessStats from "../components/BussinessStats";
 import Navbar from "../components/Navbar";
 import peopleHp from "../assets/lottie/people-hp.json";
+import rightArrow from "../assets/lottie/rightArrow.json";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,9 +28,15 @@ const HomePage: React.FC = () => {
             <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
             <button
               onClick={() => navigateConsultation()}
-              className="bg-white text-black font-medium text-2xl px-8 py-4 rounded-2xl mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
+              className="bg-white text-black font-medium text-2xl pl-4 py-0 rounded-2xl mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
+              style={{ display: "flex", alignItems: "center" }}
             >
-              ChatBot
+              <p className="text-xl text-[#0b7b71]">Consultation</p>
+              <Lottie
+                animationData={rightArrow}
+                loop={true}
+                style={{ width: "64px", height: "64px" }}
+              />
             </button>
           </div>
 
