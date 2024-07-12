@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import axios from "axios";
 import TaskDetailModal from "../components/TaskDetailsModal";
-import Upload from "../components/Upload";
 import UploadModal from "../components/UploadModal";
 import CustomCalendar from "../components/CustomCalendar";
 import Reminder from "../components/Reminder";
@@ -16,63 +15,34 @@ interface Task {
 
 const TrackerComponent: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
-  const [jsonData, setJsonData] = useState<any[]>([]);
-  const information = "Ternate"; // TODO: change information from tektokan
+  const information = localStorage.getItem("data") || "";
 
-  const [tasks, setTasks] = useState<Record<string, Task[]>>({
-    "January 2024": [
-      {
-        id: 1,
-        name: "Daily 15 minutes of English Speaking Practice",
-        checked: false,
-      },
-      {
-        id: 2,
-        name: "Start collecting School Certificates and Report Cards",
-        checked: false,
-      },
-    ],
-    "February 2024": [
-      { id: 3, name: "Task 3", checked: false },
-      { id: 4, name: "Task 4", checked: false },
-      { id: 5, name: "Task 5", checked: false },
-    ],
-    // Add more months and tasks as needed
-  });
+  const [tasks, setTasks] = useState<Record<string, Task[]>>({});
 
   const [openMonth, setOpenMonth] = useState<string | null>(null);
   const [showModalTaskDetail, setShowModalTaskDetail] = useState(false);
   const [showModalUpload, setShowModalUpload] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
-  const transformData = (data: any[]) => {
-    const result: Record<string, Task[]> = {};
-
-    data.forEach((item, index) => {
-      const tasksArray = item.tasks
-        .split(";")
-        .map((task: string, taskIndex: number) => ({
-          id: index * 100 + taskIndex + 1,
-          name: task.trim(),
-          checked: false,
-        }));
-
-      result[item.month] = tasksArray;
-    });
-
-    return result;
-  };
-
   const handleMonthClick = (month: string) => {
     setOpenMonth(openMonth === month ? null : month); // Toggle dropdown visibility
     setSelectedMonth(month);
   };
 
-  const handleTaskChange = (month: string, taskId: number) => {
-    const updatedTasks = tasks[month].map((task) =>
-      task.id === taskId ? { ...task, checked: !task.checked } : task
-    );
-    setTasks((prev) => ({ ...prev, [month]: updatedTasks }));
+  // const handleTaskChange = (month: string, taskId: number) => {
+  //   const updatedTasks = tasks[month].map((task) =>
+  //     task.id === taskId ? { ...task, checked: !task.checked } : task
+  //   );
+  //   setTasks((prev) => ({ ...prev, [month]: updatedTasks }));
+  // };
+
+  const daysLeftInMonth = (date) => {
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const currentDay = date.getDate();
+
+    return lastDayOfMonth - currentDay;
   };
 
   const handleTaskClick = (task: Task) => {
@@ -142,6 +112,67 @@ const TrackerComponent: React.FC = () => {
     );
   };
 
+  const handleGenerateTracker = async () => {
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "user",
+              content: `
+                Informasi saya ialah sebagai berikut ${information}. Buatkan tracker bulanan untuk persiapan beasiswa yang dipilih dari bulan ini (juli 2024) sampai kelas 12 semester 2. Anda tidak akan menerima informasi lebih lanjut, jadi cukup buatkan langsung trackernya. 
+                Jangan gunakan kata pengatar apapun, hanya keluarkan csv nya saja. Usahakan tracker mengandung nilai kuantitatif dan terdapat evaluasi yang kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10 dan mengerjakan soal latihan halaman 19 - 20 sebanyak 30 soal dan harus benar minimal 80%. 
+                Detailkan pula setiap dokumen syarat pendaftaran beasiswa dan/atau pendaftaran universitas. 
+                Buatlah dalam format csv dengan header: 'month (dari bulan ini)' dan 'tasks' (yaitu daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma). 
+                Gunakan bahasa Inggris.`,
+            },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          },
+        }
+      );
+
+      const csvContent = response.data.choices[0].message.content;
+
+      const lines = csvContent.trim().split("\n").slice(2);
+      const tasksByMonth = {};
+
+      lines.forEach((line, index) => {
+        const [month, tasks] = line.split(/,(.+)/);
+        if (month && tasks) {
+          tasksByMonth[month.trim()] = tasks.split(";").map((task, i) => ({
+            id: index * 10 + i + 1,
+            name: task.trim(),
+            checked: false,
+          }));
+          console.log(tasksByMonth[month.trim()]);
+        }
+      });
+      setTasks(tasksByMonth);
+    } catch (error) {
+      console.error("Error generating CSV:", error);
+    }
+  };
+
+  const countUncheckedTasksInFirstMonth = (tasks) => {
+    const months = Object.keys(tasks);
+    if (months.length === 0) return 0;
+    const firstMonth = months[0];
+    return tasks[firstMonth].filter((task) => !task.checked).length;
+  };
+
+  useEffect(() => {
+    if (information) {
+      handleGenerateTracker();
+    }
+  }, [information]);
+
   return (
     <>
       <Navbar hidden />
@@ -151,7 +182,10 @@ const TrackerComponent: React.FC = () => {
       >
         <div className="p-6 w-full md:w-[50%] my-auto">
           <CustomCalendar />
-          <Reminder remainingDays={5} remainingTasks={3} />
+          <Reminder
+            remainingDays={daysLeftInMonth(new Date())}
+            remainingTasks={countUncheckedTasksInFirstMonth(tasks)}
+          />
         </div>
         <div className="p-6 w-full md:w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-[85vh]">
           <div className="flex flex-col mt-auto h-full justify-center">

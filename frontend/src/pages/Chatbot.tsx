@@ -33,30 +33,22 @@ const ChatBot: React.FC = () => {
                  Detailkan pula setiap dokumen syarat pendaftaran. 
                  Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
                  Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV nya.` */
-    content: `Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi 
-      saya hingga perkuliahan lanjut. Mekanismenya adalah sebagai berikut. Anda akan bertanya ke saya, 
-      kemudian saya menjawab, kemudian anda bertanya lagi dan seterusnya. Ingat, hanya satu pertanyaan, 
-      kemudian jawaban, kemudian satu pertanyaan lagi. Anda harus menggali informasi lebih lanjut mengenai 
-      saya untuk menentukan rencana studi saya yang tepat. Saya ingin, anda menanyai saya, seperti saat ini 
-      saya berada di tingkat mana, minat saya, hal yang biasa saya lakukan di waktu senggang, 
-      dimanakah saya tinggal, nilai saya, dan lain sebagainya. Anda harus berkekspetasi saya berasal dari daerah 3T, 
-      terluar, tertinggal, terdepan yang kekurangan akses informasi. Sebagai contoh, misalkan saya sering mengoprek remote TV, 
-      mungkin saya cocok di jurusan elektro dan lain sebagainya. Anda harus terus menggali informasi tentang saya hingga 
-      seluruh informasi yang diperlukan terkumpul. Setelah semua informasi terkumpul, berikan daftar universitas dan 
-      jurusan yang mungkin bisa jalani. Pastikan bahwa jurusan yang disarankan realistis. Jika universitas dan jurusan 
-      yang disarankan berada di luar negeri, berikan pula saran beasiswa yang bisa diambil. Cukup berikan maksimal 5 saran untuk univ 
-      luar negeri dan 5 saran untuk univ dalam negeri. Setelah diberikan list, saya akan memilih satu dari 5 saran tersebut. 
-      Jika saya tidak puas, saya akan memilih untuk mencarikan jurusan dan universitas lain. Prioritaskan universitas dan jurusan yang memiliki 
-      beasiswa, dan prioritaskan universitas luar negeri. Setelah itu, berikan pula contoh pekerjaan dari jurusan tersebut dan ekspetasi 
-      gajinya dalam indonesia rupiah. Gunakan bahasa Inggris dan gunakan bahasa informal, seperti seseorang yang curhat ke bestienya. 
-      Gunakan bahasa gaul seperti gyatt skibidi delulu. Gunakan emoticon sehingga lebih ramah, tapi jangan berlebihan. 
-      
-      Setelah semua informasi didapatkan dan pengguna sudah memilih universitas, buatkan tracker bulanan untuk persiapan beasiswa yang dipilih dari jenjang kelas saat ini sampai kelas 12 semester 2. Anda tidak akan menerima informasi lebih lanjut, jadi cukup buatkan langsung trackernya. Jangan gunakan kata pengatar apapun, hanya keluarkan CSV NYA SAJA.
-        Kondisi saat ini, saya tinggal dilokasi dimana saya sudah menyebutkan sebelumnya, membutuhkan beasiswa, nilai rapor saya rata-rata sesuai informasi yang digathering, dan kemampuan berbahasa Inggris sesuai dengan kondisi saya saat ini.
-        Usahakan tracker mengandung nilai kuantitatif dan terdapat evaluasi yang kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10 dan mengerjakan soal latihan halaman 19 - 20 sebanyak 30 soal dan harus benar minimal 80%. 
-        Detailkan pula setiap dokumen syarat pendaftaran beasiswa dan / atau pendaftaran universitas. 
-        Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
-        Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV. Jika anda ingin mulai menulis CSV, gunakan penanda "ABCDE"`,
+    content: `
+      Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi saya hingga perkuliahan lanjut. 
+      Mekanismenya adalah sebagai berikut. Anda akan bertanya ke saya, kemudian saya menjawab, kemudian anda bertanya lagi dan seterusnya. 
+      Ingat, hanya satu pertanyaan, kemudian jawaban, kemudian satu pertanyaan lagi. Anda harus menggali informasi lebih lanjut mengenai saya 
+      untuk menentukan rencana studi saya yang tepat. Saya ingin, anda menanyai saya, seperti saat ini saya sedang di tingkat mana, minat saya, hal yang biasa saya lakukan di waktu senggang, 
+      di manakah saya tinggal, nilai saya, dan lain sebagainya. Anda harus berkekspetasi saya berasal dari daerah 3T (terluar, tertinggal, terdepan) yang kekurangan akses informasi. 
+      Sebagai contoh, misalkan saya sering mengoprek remote TV, mungkin saya cocok di jurusan elektro dan lain sebagainya. 
+      Anda harus terus menggali informasi tentang saya hingga seluruh informasi yang diperlukan terkumpul. Setelah semua informasi terkumpul, inilah yang harus Anda lakukan:
+      1. Berikan daftar universitas dan jurusan yang mungkin bisa jalani. Pastikan bahwa jurusan yang disarankan realistis. 
+         Jika universitas dan jurusan yang disarankan berada di luar negeri, berikan pula saran beasiswa yang bisa diambil. 
+         Cukup berikan maksimal 5 saran untuk univ luar negeri dan 5 saran untuk univ dalam negeri. 
+         Prioritaskan universitas dan jurusan yang memiliki beasiswa, dan prioritaskan universitas luar negeri. (1 bubble Anda)
+      2. Setelah diberikan list, saya akan memilih satu dari 5 saran tersebut. Jika saya tidak puas, saya akan memilih untuk mencarikan jurusan dan universitas lain. (1 bubble saya)
+      3. Setelah itu, berikan pula contoh pekerjaan dari jurusan tersebut dan ekspektasi gajinya dalam indonesia rupiah. Akhiri dengan "BrightBestie". (1 bubble Anda)
+      Gunakan bahasa Inggris dan gunakan bahasa informal, seperti seseorang yang curhat ke bestienya. 
+      Gunakan bahasa gaul seperti gyatt skibidi delulu. Gunakan emoticon sehingga lebih ramah, tapi jangan berlebihan. `,
     // TODO: add prompt
   };
 
@@ -69,6 +61,7 @@ const ChatBot: React.FC = () => {
 
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [input, setInput] = useState<string>("");
+  const [canEnd, setCanEnd] = useState<boolean>(false);
 
   const [textareaRows, setTextareaRows] = useState(1);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -188,53 +181,64 @@ const ChatBot: React.FC = () => {
       );
 
       const botMessage: Message = response.data.choices[0].message;
-      if (botMessage.content.includes("ABCDE")) {
-        let result = splitText(botMessage.content, "ABCDE");
+      if (botMessage.content.includes("BrightBestie")) {
+        let result = splitText(botMessage.content, "BrightBestie");
         console.log(result);
         let message: Message = {
           id: 100,
           content: result[0],
           role: "assistant",
         };
-        //const charactersToRemove = "qwertyuiopasdfghjklzxcvbnm";
         setMessages([...updatedMessages, message]);
-        // Create a regular expression pattern with global and case-insensitive flags
-        //const regex = new RegExp(`[${charactersToRemove}]`, 'gi');
-
-        // Replace the characters with an empty string
-        //const cleanedText = response.data.choices[0].message.content.replace(regex, '');
-
-        const csvContent = result[1];
-
-        const formattedCSVContent = csvContent.replace(
-          /(".*?")/g,
-          (match: string) => {
-            return match.replace(/,/g, ";");
-          }
-        );
-
-        const parsedData = Papa.parse(formattedCSVContent, {
-          header: true,
-          skipEmptyLines: true,
-        });
-
-        let messageFinal: Message = {
-          id: 101,
-          content:
-            "Tracker has been generated. You will be redirected to tracker page within 3 seconds. If you are not login yet, please login first.",
-          role: "assistant",
-        };
-        setMessages([...updatedMessages, messageFinal]);
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
-
-        let transformedData = transformData(parsedData.data);
-        transformedData = JSON.stringify(transformedData);
-        localStorage.setItem("data", transformedData);
+        setCanEnd(true);
       } else {
         setMessages([...updatedMessages, botMessage]);
       }
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+    }
+  };
+
+  const handleEndChat = async (e) => {
+    e.preventDefault();
+
+    const newMessage: Message = {
+      id: messages.length + 1,
+      content: `Berikan rangkuman apa yang Anda ketahui tentang saya dari pertanyaan yang telah Anda ajukan.`,
+      role: "user",
+    };
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o",
+          messages: [initialPrompt, ...messages, newMessage].map(
+            ({ role, content }) => ({ role, content })
+          ),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          },
+        }
+      );
+
+      const botMessage: Message = response.data.choices[0].message;
+
+      let messageFinal: Message = {
+        id: messages.length + 1,
+        content: `Tracker has been generated. You will be redirected to tracker page within 3 seconds. 
+          If you are not logged in yet, please login first.`,
+        role: "assistant",
+      };
+      setMessages([...messages, messageFinal]);
+      localStorage.setItem("data", botMessage.content);
+      setCanEnd(false);
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     } catch (error) {
       console.error("Error fetching AI response:", error);
     }
@@ -291,6 +295,16 @@ const ChatBot: React.FC = () => {
               </div>
             </div>
           ))}
+          {canEnd && (
+            <div className="w-full flex justify-end">
+              <button
+                className="p-3 rounded-md bg-[#0b7b71] text-white"
+                onClick={handleEndChat}
+              >
+                End Chat
+              </button>
+            </div>
+          )}
           <div ref={lastMessageRef}></div>
         </div>
         <form
