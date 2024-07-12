@@ -146,14 +146,14 @@ const TrackerComponent: React.FC = () => {
     <>
       <Navbar hidden />
       <div
-        className="relative flex w-full items-center justify-between h-screen bg-cover bg-center -mt-16"
+        className="relative flex flex-col md:flex-row w-full items-center justify-between h-screen bg-cover bg-center -mt-16"
         style={{ backgroundImage: "url('./BG2.svg')" }}
       >
-        <div className="p-6 w-[50%] my-auto">
+        <div className="p-6 w-full md:w-[50%] my-auto">
           <CustomCalendar />
           <Reminder remainingDays={5} remainingTasks={3} />
         </div>
-        <div className="p-6 w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-[85vh]">
+        <div className="p-6 w-full md:w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-[85vh]">
           <div className="flex flex-col mt-auto h-full justify-center">
             <h1
               className="text-3xl font-extrabold text-center mb-6"
