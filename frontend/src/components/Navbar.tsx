@@ -81,9 +81,14 @@ export default function Navbar({ hidden = false }) {
             </a>
             <div className="hidden md:ml-6 md:flex md:space-x-4">
               {isLogin ? (
-                <a href="/tracker" className={getLinkClass("/tracker")}>
-                  Tracker
-                </a>
+                <>
+                  <a href="/tracker" className={getLinkClass("/tracker")}>
+                    Tracker
+                  </a>
+                  <a href="/connect" className={getLinkClass("/connect")}>
+                    Super Bestie
+                  </a>
+                </>
               ) : (
                 <a
                   href="/consultation"
@@ -184,17 +189,30 @@ export default function Navbar({ hidden = false }) {
             ConsultBuddy
           </Disclosure.Button>
           {isLogin ? (
-            <Disclosure.Button
-              as="a"
-              href="/tracker"
-              className={
-                location.pathname === "/tracker"
-                  ? "block border-l-4 border-[#0b7b71] bg-[#fff0c8] py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6"
-                  : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
-              }
-            >
-              Tracker
-            </Disclosure.Button>
+            <>
+              <Disclosure.Button
+                as="a"
+                href="/tracker"
+                className={
+                  location.pathname === "/tracker"
+                    ? "block border-l-4 border-[#0b7b71] bg-[#fff0c8] py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6"
+                    : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+                }
+              >
+                Tracker
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                href="/connect"
+                className={
+                  location.pathname === "/connect"
+                    ? "block border-l-4 border-[#0b7b71] bg-[#fff0c8] py-2 pl-3 pr-4 text-base font-medium sm:pl-5 sm:pr-6"
+                    : "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+                }
+              >
+                Super Bestie
+              </Disclosure.Button>
+            </>
           ) : (
             <Disclosure.Button
               as="a"
