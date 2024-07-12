@@ -261,7 +261,7 @@ const ChatBot: React.FC = () => {
           </div>
           <div className="ml-4">
             <div className="font-bold">Your BrightBestie</div>
-            <div className="text-sm text-gray-500">2 Min</div>
+            <div className="text-sm text-gray-500">🟢 Online</div>
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
