@@ -3,6 +3,7 @@ import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import BusinessStats from "../components/BussinessStats";
 import Navbar from "../components/Navbar";
+import Services from "../components/Services.tsx";
 import peopleHp from "../assets/lottie/people-hp.json";
 import rightArrow from "../assets/lottie/rightArrow.json";
 
@@ -51,45 +52,7 @@ const HomePage: React.FC = () => {
 
         <BusinessStats />
 
-        {/* service */}
-        <div className="flex flex-col items-center justify-center h-full bg-white py-12">
-          <h1 className="text-5xl font-bold mb-8">Our Services</h1>
-          <div className="flex flex-col md:flex-row items-center justify-between w-full px-8">
-            <div className="flex-1 p-8 flex flex-col items-center">
-              <img
-                src="path/to/image1.jpg"
-                alt="Service 1"
-                className="w-32 h-32 mb-4 rounded-full object-cover"
-              />
-              <h2 className="text-3xl font-bold mb-4">Service 1</h2>
-              <p className="text-md text-center">
-                Description Description Description Description Description
-              </p>
-            </div>
-            <div className="flex-1 p-8 flex flex-col items-center">
-              <img
-                src="path/to/image2.jpg"
-                alt="Service 2"
-                className="w-32 h-32 mb-4 rounded-full object-cover"
-              />
-              <h2 className="text-3xl font-bold mb-4">Service 2</h2>
-              <p className="text-md text-center">
-                Description Description Description Description Description
-              </p>
-            </div>
-            <div className="flex-1 p-8 flex flex-col items-center">
-              <img
-                src="path/to/image3.jpg"
-                alt="Service 3"
-                className="w-32 h-32 mb-4 rounded-full object-cover"
-              />
-              <h2 className="text-3xl font-bold mb-4">Service 3</h2>
-              <p className="text-md text-center">
-                Description Description Description Description Description
-              </p>
-            </div>
-          </div>
-        </div>
+        <Services />
       </div>
     </>
   );
