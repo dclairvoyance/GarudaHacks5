@@ -6,6 +6,7 @@ import React, {
   FormEvent,
 } from "react";
 import axios from "axios";
+import Papa from "papaparse";
 
 import ChatbotProfileImage from "../assets/chatbot-profile.svg";
 
@@ -19,8 +20,38 @@ const ChatBot: React.FC = () => {
   const initialPrompt: Message = {
     id: 0,
     role: "user",
+/*     content: `Buatkan tracker bulanan untuk persiapan beasiswa GKS dari sekarang kelas 10 semester 1 sampai kelas 12 semester 2.
+                 Kondisi saat ini, saya tinggal di Ternate, membutuhkan beasiswa, nilai rapor saya rata-rata 95, dan belum mahir berbahasa inggris.
+                 Usahakan tracker mengandung nilai kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10. 
+                 Detailkan pula setiap dokumen syarat pendaftaran. 
+                 Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
+                 Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV nya.` */
     content:
-      "Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi saya hingga perkuliahan lanjut. Mekanismenya adalah sebagai berikut. Anda akan bertanya ke saya, kemudian saya menjawab, kemudian anda bertanya lagi dan seterusnya. Ingat, hanya satu pertanyaan, kemudian jawaban, kemudian satu pertanyaan lagi. Anda harus menggali informasi lebih lanjut mengenai saya untuk menentukan rencana studi saya yang tepat. Saya ingin, anda menanyai saya, seperti saat ini saya berada di tingkat mana, minat saya, hal yang biasa saya lakukan di waktu senggang, dimanakah saya tinggal, nilai saya, dan lain sebagainya. Anda harus berkekspetasi saya berasal dari daerah 3T, terluar, tertinggal, terdepan yang kekurangan akses informasi. Sebagai contoh, misalkan saya sering mengoprek remote TV, mungkin saya cocok di jurusan elektro dan lain sebagainya. Anda harus terus menggali informasi tentang saya hingga seluruh informasi yang diperlukan terkumpul. Setelah semua informasi terkumpul, berikan daftar universitas dan jurusan yang mungkin bisa jalani. Pastikan bahwa jurusan yang disarankan realistis. Jika universitas dan jurusan yang disarankan berada di luar negeri, berikan pula saran beasiswa yang bisa diambil. Cukup berikan maksimal 5 saran untuk univ luar negeri dan 5 saran untuk univ dalam negeri. Setelah diberikan list, saya akan memilih satu dari 5 saran tersebut. Jika saya tidak puas, saya akan memilih untuk mencarikan jurusan dan universitas lain. Prioritaskan universitas dan jurusan yang memiliki beasiswa, dan prioritaskan universitas luar negeri. Setelah itu, berikan pula contoh pekerjaan dari jurusan tersebut dan ekspetasi gajinya dalam indonesia rupiah. Gunakan bahasa Inggris dan gunakan bahasa informal, seperti seseorang yang curhat ke bestienya. Gunakan bahasa gaul seperti gyatt skibidi delulu", // TODO: add prompt
+      `Anda adalah teman / bestie virtual saya. Anda ingin membantu saya merencanakan studi 
+      saya hingga perkuliahan lanjut. Mekanismenya adalah sebagai berikut. Anda akan bertanya ke saya, 
+      kemudian saya menjawab, kemudian anda bertanya lagi dan seterusnya. Ingat, hanya satu pertanyaan, 
+      kemudian jawaban, kemudian satu pertanyaan lagi. Anda harus menggali informasi lebih lanjut mengenai 
+      saya untuk menentukan rencana studi saya yang tepat. Saya ingin, anda menanyai saya, seperti saat ini 
+      saya berada di tingkat mana, minat saya, hal yang biasa saya lakukan di waktu senggang, 
+      dimanakah saya tinggal, nilai saya, dan lain sebagainya. Anda harus berkekspetasi saya berasal dari daerah 3T, 
+      terluar, tertinggal, terdepan yang kekurangan akses informasi. Sebagai contoh, misalkan saya sering mengoprek remote TV, 
+      mungkin saya cocok di jurusan elektro dan lain sebagainya. Anda harus terus menggali informasi tentang saya hingga 
+      seluruh informasi yang diperlukan terkumpul. Setelah semua informasi terkumpul, berikan daftar universitas dan 
+      jurusan yang mungkin bisa jalani. Pastikan bahwa jurusan yang disarankan realistis. Jika universitas dan jurusan 
+      yang disarankan berada di luar negeri, berikan pula saran beasiswa yang bisa diambil. Cukup berikan maksimal 5 saran untuk univ 
+      luar negeri dan 5 saran untuk univ dalam negeri. Setelah diberikan list, saya akan memilih satu dari 5 saran tersebut. 
+      Jika saya tidak puas, saya akan memilih untuk mencarikan jurusan dan universitas lain. Prioritaskan universitas dan jurusan yang memiliki 
+      beasiswa, dan prioritaskan universitas luar negeri. Setelah itu, berikan pula contoh pekerjaan dari jurusan tersebut dan ekspetasi 
+      gajinya dalam indonesia rupiah. Gunakan bahasa Inggris dan gunakan bahasa informal, seperti seseorang yang curhat ke bestienya. 
+      Gunakan bahasa gaul seperti gyatt skibidi delulu. Gunakan emoticon sehingga lebih ramah, tapi jangan berlebihan. 
+      
+      Setelah semua informasi didapatkan dan pengguna sudah memilih universitas, buatkan tracker bulanan untuk persiapan beasiswa yang dipilih dari jenjang kelas saat ini sampai kelas 12 semester 2. Anda tidak akan menerima informasi lebih lanjut, jadi cukup buatkan langsung trackernya. Jangan gunakan kata pengatar apapun, hanya keluarkan CSV NYA SAJA.
+        Kondisi saat ini, saya tinggal dilokasi dimana saya sudah menyebutkan sebelumnya, membutuhkan beasiswa, nilai rapor saya rata-rata sesuai informasi yang digathering, dan kemampuan berbahasa Inggris sesuai dengan kondisi saya saat ini.
+        Usahakan tracker mengandung nilai kuantitatif dan terdapat evaluasi yang kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10 dan mengerjakan soal latihan halaman 19 - 20 sebanyak 30 soal dan harus benar minimal 80%. 
+        Detailkan pula setiap dokumen syarat pendaftaran beasiswa dan / atau pendaftaran universitas. 
+        Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
+        Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV. Jika anda ingin mulai menulis CSV, gunakan MARK "ABCDEFGHIJ"`,
+      // TODO: add prompt
   };
 
   const initialMessage: Message = {
@@ -58,9 +89,43 @@ const ChatBot: React.FC = () => {
     setTextareaRows(currentRows < maxRows ? currentRows : maxRows);
   }, [input]);
 
+  function transformData(data) {
+    const result = {};
+  
+    data.forEach((item, index) => {
+      const tasksArray = item.tasks.split(';').map((task, taskIndex) => ({
+        id: index * 100 + taskIndex + 1,
+        name: task.trim(),
+        checked: false,
+      }));
+  
+      result[item.month] = tasksArray;
+    });
+  
+    return result;
+  }
+
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
+
+  function splitText(text, searchString) {
+    // Find the index of the search string in the text
+    const index = text.indexOf(searchString);
+  
+    // If the search string is not found, return the original text as the first part and an empty string as the second part
+    if (index === -1) {
+        return [text, ""];
+    }
+
+    // Extract the part before the search string
+    const part1 = text.substring(0, index).trim();
+    
+    // Extract the part after the search string
+    const part2 = text.substring(index + searchString.length).trim();
+  
+    return [part1, part2];
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,7 +161,38 @@ const ChatBot: React.FC = () => {
       );
 
       const botMessage: Message = response.data.choices[0].message;
-      setMessages([...updatedMessages, botMessage]);
+      if (botMessage.content.includes("ABCDEFGHIJ")) {
+        let result = splitText(botMessage.content, "ABCDEFGHIJ")
+        console.log(result)
+        //const charactersToRemove = "qwertyuiopasdfghjklzxcvbnm";
+        setMessages([...updatedMessages, result[0]]);
+        // Create a regular expression pattern with global and case-insensitive flags
+        //const regex = new RegExp(`[${charactersToRemove}]`, 'gi');
+        
+        // Replace the characters with an empty string
+        //const cleanedText = response.data.choices[0].message.content.replace(regex, '');
+
+        const csvContent = result[1];
+  
+        const formattedCSVContent = csvContent.replace(
+          /(".*?")/g,
+          (match: string) => {
+            return match.replace(/,/g, ";");
+          }
+        );
+  
+        const parsedData = Papa.parse(formattedCSVContent, {
+          header: true,
+          skipEmptyLines: true,
+        });
+        console.log(parsedData.data)
+        let transformedData = transformData(parsedData.data);
+        transformedData = JSON.stringify(transformedData);
+        console.log(transformedData)
+        localStorage.setItem('data', transformedData)
+      } else {
+        setMessages([...updatedMessages, botMessage]);
+      }
     } catch (error) {
       console.error("Error fetching AI response:", error);
     }
