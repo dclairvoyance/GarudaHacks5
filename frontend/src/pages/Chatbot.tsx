@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import Papa from "papaparse";
+import Markdown from 'react-markdown'
 
 import ChatbotProfileImage from "../assets/chatbot-profile.svg";
 
@@ -164,8 +165,13 @@ const ChatBot: React.FC = () => {
       if (botMessage.content.includes("ABCDEFGHIJ")) {
         let result = splitText(botMessage.content, "ABCDEFGHIJ")
         console.log(result)
+        let message: Message = {
+            id: 100,
+            content: result[0],
+            role: "assistant"
+        }
         //const charactersToRemove = "qwertyuiopasdfghjklzxcvbnm";
-        setMessages([...updatedMessages, result[0]]);
+        setMessages([...updatedMessages, message]);
         // Create a regular expression pattern with global and case-insensitive flags
         //const regex = new RegExp(`[${charactersToRemove}]`, 'gi');
         
@@ -237,7 +243,10 @@ const ChatBot: React.FC = () => {
                     : "20px 20px 20px 0px", // Rounded except bottom left
               }}
             >
-              {message.content}
+                <Markdown>
+                    {message.content}
+                </Markdown>
+              
             </div>
           </div>
         ))}
