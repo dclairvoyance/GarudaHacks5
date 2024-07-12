@@ -2,6 +2,7 @@ import React from "react";
 import PeaopleImage from "../assets/People.svg";
 import { useNavigate } from "react-router-dom";
 import BusinessStats from "../components/BussinessStats";
+import { useSpring, animated } from "react-spring";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
