@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
           <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
           <button
             onClick={() => navigateConsultation()}
-            className="bg-white text-black font-medium text-2xl px-8 py-4 rounded-full mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
+            className="bg-white text-black font-medium text-2xl px-8 py-4 rounded-2xl mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
           >
             ChatBot
           </button>
@@ -51,7 +51,7 @@ const HomePage: React.FC = () => {
               className="w-32 h-32 mb-4 rounded-full object-cover"
             />
             <h2 className="text-3xl font-bold mb-4">Service 1</h2>
-            <p className="text-xl text-center">
+            <p className="text-md text-center">
               Description Description Description Description Description
             </p>
           </div>
@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
               className="w-32 h-32 mb-4 rounded-full object-cover"
             />
             <h2 className="text-3xl font-bold mb-4">Service 2</h2>
-            <p className="text-xl text-center">
+            <p className="text-md text-center">
               Description Description Description Description Description
             </p>
           </div>
@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
               className="w-32 h-32 mb-4 rounded-full object-cover"
             />
             <h2 className="text-3xl font-bold mb-4">Service 3</h2>
-            <p className="text-xl text-center">
+            <p className="text-md text-center">
               Description Description Description Description Description
             </p>
           </div>

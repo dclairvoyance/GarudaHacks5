@@ -213,12 +213,21 @@ const ChatBot: React.FC = () => {
           header: true,
           skipEmptyLines: true,
         });
-        console.log(parsedData.data)
+
+        let messageFinal: Message = {
+            id: 101,
+            content: "Tracker has been generated. You will be redirected to tracker page within 3 seconds.",
+            role: "assistant"
+        }
+        setMessages([...updatedMessages, messageFinal]);
+        setTimeout(() => {
+            navigate("/tracker");
+        }, 3000);
+        
         let transformedData = transformData(parsedData.data);
         transformedData = JSON.stringify(transformedData);
-        console.log(transformedData)
         localStorage.setItem('data', transformedData)
-        navigate("/tracker");
+
       } else {
         setMessages([...updatedMessages, botMessage]);
       }
