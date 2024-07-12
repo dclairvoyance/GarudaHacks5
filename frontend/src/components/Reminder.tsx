@@ -13,7 +13,7 @@ const Reminder: React.FC<ReminderProps> = ({
   remainingTasks,
 }) => {
   return (
-    <div className="flex flex-col items-center mt-2">
+    <div className="flex flex-col items-center mt-12 md:mt-4">
       {/* <div
         className="w-16 h-16 mr-4 flex ml-12 mt-4"
         style={{ transform: "scale(2)" }}
@@ -23,7 +23,7 @@ const Reminder: React.FC<ReminderProps> = ({
       <div className="bg-blue-100 p-4 mt-4 rounded-lg shadow-lg flex items-center">
         <CalendarIcon className="text-blue-500 h-6 w-6 mr-2" />
         <CheckCircleIcon className="text-green-500 h-6 w-6 mr-2" />
-        <span className="text-lg font-semibold">
+        <span className="text-md font-semibold">
           {remainingDays} {remainingDays === 1 ? "day" : "days"} left and{" "}
           {remainingTasks} {remainingTasks === 1 ? "task" : "tasks"} to go! You
           got this!

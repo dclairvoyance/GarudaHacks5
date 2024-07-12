@@ -13,7 +13,7 @@ const CustomCalendar: React.FC = () => {
   const value = [today, lastDayOfMonth];
   return (
     <div
-      className="calendar-container custom-calendar flex justify-center"
+      className="calendar-container custom-calendar justify-center md:flex hidden"
       style={{ width: "100%" }}
     >
       <Calendar fixedRange={range} isRangeSelector value={value} size={360} />
