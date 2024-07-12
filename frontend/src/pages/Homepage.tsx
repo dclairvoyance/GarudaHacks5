@@ -26,7 +26,9 @@ const HomePage: React.FC = () => {
           <div className="flex-2 p-16 md:p-16 md:ml-8 my-auto">
             <h1 className="text-5xl mb-3">Uplift your journey with</h1>
             <h1 className="text-5xl font-bold mb-6">BrightBestie</h1>
-            <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
+            <p className="text-2xl mb-4">
+              Take control of your education and career today!
+            </p>
             <button
               onClick={() => navigateConsultation()}
               className="bg-white text-black font-medium text-2xl pl-4 py-0 rounded-2xl mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"

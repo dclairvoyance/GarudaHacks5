@@ -8,12 +8,13 @@ const services = [
     name: "Tracker Pal",
     id: "task-tracker",
     href: "#",
-    description: "Essential tools for task management and productivity.",
+    description:
+      "Track your progress and stay motivated with constructive feedbacks.",
     features: [
       "Monthly task tracking",
-      "Reminders",
+      "Periodic reminders",
       "Action plans with resources",
-      "Feedback and reviews",
+      "Feedbacks and reviews",
     ],
     mostPopular: false,
   },
@@ -21,12 +22,13 @@ const services = [
     name: "ConsultBuddy.AI",
     id: "consultation",
     href: "#",
-    description: "Get personalized consultation from your Buddy with AI-driven insights.",
+    description:
+      "Get a personalized plan from your Buddy with AI-driven insights.",
     features: [
       "University recommendations",
       "Scholarship information",
-      "Salary information",
-      "Learning Path",
+      "Job and salary data",
+      "Actionable learning path",
     ],
     mostPopular: true,
   },
@@ -34,8 +36,13 @@ const services = [
     name: "Super Bestie",
     id: "match-mentoring",
     href: "#",
-    description: "Connect with super bestie for personal growth.",
-    features: ["Unlimited discussions", "Career advice", "Education advice"],
+    description:
+      "Connect with super besties who've experienced the same as you.",
+    features: [
+      "Unlimited discussions",
+      "Career and education advice",
+      "Mental support",
+    ],
     mostPopular: false,
   },
 ];
@@ -71,7 +78,7 @@ export default function Example() {
               Our Services
             </h2>
             <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              The right plan for uplifting your journey
+              Success plan, tailored for you
             </p>
           </div>
           <p className="mt-6 w-full text-left text-lg leading-8 text-gray-600">

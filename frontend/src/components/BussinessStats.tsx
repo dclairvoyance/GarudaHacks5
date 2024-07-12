@@ -45,12 +45,12 @@ const BusinessStats: React.FC = () => {
       <div className="flex flex-col mx-auto md:flex-row items-center justify-between py-8 px-4 md:px-0">
         <div className="mb-8 md:mb-0 md:mr-8 max-w-2xl">
           <h2 className="text-3xl font-bold mb-4">
-            Your <span style={{ color: "#0b7b71" }}>friend</span> in accessing
+            Your <span style={{ color: "#0b7b71" }}>bestie</span> in accessing
             educational opportunities
           </h2>
           <p className="text-gray-500">
-            We provide consultations, resources, and progress tracking to give
-            you the exposure and boost you need to succeed.
+            We provide consultations, resources, and progress tracking, exposing
+            you to your own path to success.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
