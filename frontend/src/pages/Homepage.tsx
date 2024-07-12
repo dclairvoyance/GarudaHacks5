@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
         style={{ backgroundImage: "url('./BG.svg')" }}
       >
         <div className="flex-3 p-16 md:p-16 md:ml-8 my-auto">
-          <h1 className="text-7xl mb-3">Uplift your XXX with</h1>
+          <h1 className="text-7xl mb-3">Uplift your journey with</h1>
           <h1 className="text-7xl font-bold mb-6">BrightBestie</h1>
           <p className="text-2xl mb-4">Tagline Tagline Tagline</p>
           <button
@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
           <img
             src={PeaopleImage}
             alt="Homepage visual"
-            className="absolute bottom-0 right-8 w-[30%] h-auto rounded-lg"
+            className="absolute bottom-0 right-8  h-[75%]"
           />
         </div>
       </div>

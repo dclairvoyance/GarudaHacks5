@@ -20,7 +20,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon }) => {
 
 const BusinessStats: React.FC = () => {
   return (
-    <div className="w-full bg-gray-50 px-8">
+    <div className="w-full bg-gray-50 px-16">
       <div className="flex flex-col mx-auto md:flex-row items-center justify-between py-12 px-4 md:px-0">
         <div className="mb-8 md:mb-0 md:mr-8">
           <h2 className="text-3xl font-bold mb-4">
@@ -39,7 +39,7 @@ const BusinessStats: React.FC = () => {
             icon={<span className="text-4xl">👥</span>}
           />
           <StatsCard
-            title="Scholarships"
+            title="Scholarships Earned"
             value={46328}
             icon={<span className="text-4xl">🎓</span>}
           />
