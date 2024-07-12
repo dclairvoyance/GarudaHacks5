@@ -5,6 +5,7 @@ import ChatBot from "./pages/Chatbot";
 import HomePage from "./pages/Homepage";
 import TrackerComponent from "./pages/Tracker";
 import RegisterPage from "./pages/Register";
+import ConnectPages from "./pages/Connect";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/consultation" element={<ChatBot />} />
         <Route path="/articles" element={<Articles />} />
+        <Route path="/connect" element={<ConnectPages />} />
         <Route path="/tracker" element={<TrackerComponent />} />
         <Route path="/progress" element={<h1>Test</h1>} />
       </Routes>
