@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Disclosure,
@@ -10,16 +10,42 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import LampIcon from "../assets/lamp.png";
 
-export default function Navbar() {
+export default function Navbar({ hidden = false }) {
   const location = useLocation();
+  const [isNavbarVisible, setIsNavbarVisible] = useState(!hidden);
 
-  const getLinkClass = (path: string) =>
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      if (event.clientY < 50) {
+        setIsNavbarVisible(true);
+      } else {
+        setIsNavbarVisible(false);
+      }
+    };
+
+    if (hidden) {
+      document.addEventListener("mousemove", handleMouseMove);
+    }
+
+    return () => {
+      if (hidden) {
+        document.removeEventListener("mousemove", handleMouseMove);
+      }
+    };
+  }, [hidden]);
+
+  const getLinkClass = (path) =>
     location.pathname === path
       ? "inline-flex items-center border-b-2 border-[#0b7b71] px-1 pt-1 text-sm font-medium text-gray-900"
       : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700";
 
   return (
-    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-50">
+    <Disclosure
+      as="nav"
+      className={`bg-white shadow sticky top-0 z-50 transition-opacity duration-300 ${
+        isNavbarVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 justify-between">
           <div className="flex">
@@ -59,9 +85,7 @@ export default function Navbar() {
                 type="button"
                 className="relative inline-flex items-center gap-x-1.5 rounded-md bg-[#0b7b71] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-bg-[#0b7b71] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                <a href="/login">
-                  Login
-                </a>
+                <a href="/login">Login</a>
               </button>
             </div>
             <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">

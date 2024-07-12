@@ -6,6 +6,7 @@ import Upload from "../components/Upload";
 import UploadModal from "../components/UploadModal";
 import CustomCalendar from "../components/CustomCalendar";
 import Reminder from "../components/Reminder";
+import Navbar from "../components/Navbar";
 
 interface Task {
   id: number;
@@ -199,131 +200,134 @@ const TrackerComponent: React.FC = () => {
   };
 
   return (
-    <div
-      className="relative flex w-full items-center justify-between h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('./BG2.svg')" }}
-    >
-      <div className="p-6 w-[50%] my-auto">
-        <CustomCalendar />
-        <Reminder remainingDays={5} remainingTasks={3} />
-      </div>
-      <div className="p-6 w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-screen">
-        <h1
-          className="text-3xl font-extrabold text-center mb-6"
-          style={{ color: "#0b7b71" }}
-        >
-          Monthly Tracker
-        </h1>
-        <div className="relative h-[75vh] overflow-y-auto bg-white p-4 rounded-lg shadow-md scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-[#f8e4ad] scrollbar-track-gray-50">
-          <div className="bg-white p-6">
-            {Object.keys(tasks).map((month) => (
-              <div key={month} className="mb-4">
-                <button
-                  className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between transition-colors ${
-                    openMonth === month ? "bg-[#FFF0C8]" : "bg-white"
-                  } hover:bg-[#f8e4ad] focus:outline-none`}
-                  onClick={() => handleMonthClick(month)}
-                >
-                  <div className="flex items-center">
-                    {renderProgressCircle(calculateProgress(month))}
-                    <span className="font-semibold text-gray-800 ml-2">
-                      {month}
+    <>
+      <Navbar hidden />
+      <div
+        className="relative flex w-full items-center justify-between h-screen bg-cover bg-center"
+        style={{ backgroundImage: "url('./BG2.svg')" }}
+      >
+        <div className="p-6 w-[50%] my-auto">
+          <CustomCalendar />
+          <Reminder remainingDays={5} remainingTasks={3} />
+        </div>
+        <div className="p-6 w-[50%] bg-[#ffffff] shadow-lg rounded-lg h-screen">
+          <h1
+            className="text-3xl font-extrabold text-center mb-6"
+            style={{ color: "#0b7b71" }}
+          >
+            Monthly Tracker
+          </h1>
+          <div className="relative h-[75vh] overflow-y-auto bg-white p-4 rounded-lg shadow-md scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-[#f8e4ad] scrollbar-track-gray-50">
+            <div className="bg-white p-6">
+              {Object.keys(tasks).map((month) => (
+                <div key={month} className="mb-4">
+                  <button
+                    className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between transition-colors ${
+                      openMonth === month ? "bg-[#FFF0C8]" : "bg-white"
+                    } hover:bg-[#f8e4ad] focus:outline-none`}
+                    onClick={() => handleMonthClick(month)}
+                  >
+                    <div className="flex items-center">
+                      {renderProgressCircle(calculateProgress(month))}
+                      <span className="font-semibold text-gray-800 ml-2">
+                        {month}
+                      </span>
+                    </div>
+                    <span className="ml-2 text-gray-600">
+                      {getProgressText(month)}
                     </span>
-                  </div>
-                  <span className="ml-2 text-gray-600">
-                    {getProgressText(month)}
-                  </span>
-                </button>
-                {openMonth === month && (
-                  <div className="mt-3 px-4">
-                    <div className="relative mb-4">
-                      <div className="bg-gray-300 h-5 rounded-full overflow-hidden">
-                        <div
-                          className="h-5 rounded-full"
-                          style={{
-                            background: "#0b7b71",
-                            width: `${calculateProgress(month)}%`,
-                          }}
-                        />
-                      </div>
-                      <div className="absolute flex justify-center w-full top-0.5 text-xs">
-                        <div className="bg-[#0b7b71] rounded-sm py-0.25 px-1 text-white">
-                          {Math.round(calculateProgress(month))}%
+                  </button>
+                  {openMonth === month && (
+                    <div className="mt-3 px-4">
+                      <div className="relative mb-4">
+                        <div className="bg-gray-300 h-5 rounded-full overflow-hidden">
+                          <div
+                            className="h-5 rounded-full"
+                            style={{
+                              background: "#0b7b71",
+                              width: `${calculateProgress(month)}%`,
+                            }}
+                          />
+                        </div>
+                        <div className="absolute flex justify-center w-full top-0.5 text-xs">
+                          <div className="bg-[#0b7b71] rounded-sm py-0.25 px-1 text-white">
+                            {Math.round(calculateProgress(month))}%
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <ul className="space-y-2">
-                      {tasks[month].map((task) => (
-                        <li
-                          key={task.id}
-                          className="flex justify-between items-center"
-                        >
-                          <div className="flex items-center gap-x-2">
-                            <input
-                              type="checkbox"
-                              checked={task.checked}
-                              // onChange={() => handleTaskChange(month, task.id)}
-                              className="mr-2 rounded border-gray-300 checked:bg-[#0b7b71] focus:ring-[#0b7b71]"
-                            />
-                            <span
-                              onClick={() => handleTaskClick(task)}
-                              className="cursor-pointer"
-                            >
-                              {task.name}
-                            </span>
-                          </div>
-                          <button onClick={() => handleUploadClick(task)}>
-                            <svg
-                              className="w-6 h-6 text-black"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 16"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.5"
-                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      <ul className="space-y-2">
+                        {tasks[month].map((task) => (
+                          <li
+                            key={task.id}
+                            className="flex justify-between items-center"
+                          >
+                            <div className="flex items-center gap-x-2">
+                              <input
+                                type="checkbox"
+                                checked={task.checked}
+                                // onChange={() => handleTaskChange(month, task.id)}
+                                className="mr-2 rounded border-gray-300 checked:bg-[#0b7b71] focus:ring-[#0b7b71]"
                               />
-                            </svg>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            ))}
+                              <span
+                                onClick={() => handleTaskClick(task)}
+                                className="cursor-pointer"
+                              >
+                                {task.name}
+                              </span>
+                            </div>
+                            <button onClick={() => handleUploadClick(task)}>
+                              <svg
+                                className="w-6 h-6 text-black"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 16"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="1.5"
+                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                />
+                              </svg>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
+          <button
+            onClick={handleGenerateTracker}
+            className="w-full p-3 mt-6 bg-[#0b7b71] text-white rounded-lg hover:bg-[#055851] transition-colors"
+          >
+            Generate CSV
+          </button>
         </div>
-        <button
-          onClick={handleGenerateTracker}
-          className="w-full p-3 mt-6 bg-[#0b7b71] text-white rounded-lg hover:bg-[#055851] transition-colors"
-        >
-          Generate CSV
-        </button>
+
+        <TaskDetailModal
+          show={showModalTaskDetail}
+          onClose={() => {
+            setShowModalTaskDetail(false);
+            setSelectedTask(null);
+          }}
+          task={selectedTask}
+        />
+
+        <UploadModal
+          show={showModalUpload}
+          onClose={() => {
+            setShowModalUpload(false);
+            setSelectedTask(null);
+          }}
+          task={selectedTask}
+        />
       </div>
-
-      <TaskDetailModal
-        show={showModalTaskDetail}
-        onClose={() => {
-          setShowModalTaskDetail(false);
-          setSelectedTask(null);
-        }}
-        task={selectedTask}
-      />
-
-      <UploadModal
-        show={showModalUpload}
-        onClose={() => {
-          setShowModalUpload(false);
-          setSelectedTask(null);
-        }}
-        task={selectedTask}
-      />
-    </div>
+    </>
   );
 };
 

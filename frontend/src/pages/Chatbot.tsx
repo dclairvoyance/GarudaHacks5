@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import chatbotAnimation from "../assets/lottie/chatbot.json";
 
+import Navbar from "../components/Navbar";
+
 interface Message {
   id: number;
   content: string;
@@ -237,68 +239,71 @@ const ChatBot: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg bg-white shadow-md flex flex-col h-[100vh]">
-      <div
-        className="flex items-center p-2"
-        style={{ backgroundColor: "#FFF0C8" }}
-      >
-        <div className="w-24 h-24">
-          <Lottie animationData={chatbotAnimation} loop={true} />
-        </div>
-        <div className="ml-4">
-          <div className="font-bold">Your BrightBestie</div>
-          <div className="text-sm text-gray-500">Online</div>
-        </div>
-      </div>
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex w-full ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`p-3 max-w-[70%] ${
-                message.role === "user"
-                  ? "self-end text-white text-right"
-                  : "self-start text-black text-left"
-              }`}
-              style={{
-                backgroundColor:
-                  message.role === "user" ? "#069383" : "#E9E9E9",
-                borderRadius:
-                  message.role === "user"
-                    ? "20px 20px 0px 20px" // Rounded except bottom right
-                    : "20px 20px 20px 0px", // Rounded except bottom left
-              }}
-            >
-              <Markdown>{message.content}</Markdown>
-            </div>
-          </div>
-        ))}
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex items-center p-4 bg-[#FFF0C8]"
-      >
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Type a message"
-          className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-          rows={textareaRows}
-          style={{ lineHeight: "24px" }}
-        />
-        <button
-          type="submit"
-          className="ml-2 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+    <>
+      <Navbar hidden />
+      <div className="w-full max-w-3xl mx-auto border border-gray-200 rounded-lg bg-white shadow-md flex flex-col h-[100vh]">
+        <div
+          className="flex items-center p-2"
+          style={{ backgroundColor: "#FFF0C8" }}
         >
-          Send
-        </button>
-      </form>
-    </div>
+          <div className="w-24 h-24">
+            <Lottie animationData={chatbotAnimation} loop={true} />
+          </div>
+          <div className="ml-4">
+            <div className="font-bold">Your BrightBestie</div>
+            <div className="text-sm text-gray-500">Online</div>
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex w-full ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`p-3 max-w-[70%] ${
+                  message.role === "user"
+                    ? "self-end text-white text-right"
+                    : "self-start text-black text-left"
+                }`}
+                style={{
+                  backgroundColor:
+                    message.role === "user" ? "#069383" : "#E9E9E9",
+                  borderRadius:
+                    message.role === "user"
+                      ? "20px 20px 0px 20px" // Rounded except bottom right
+                      : "20px 20px 20px 0px", // Rounded except bottom left
+                }}
+              >
+                <Markdown>{message.content}</Markdown>
+              </div>
+            </div>
+          ))}
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="flex items-center p-4 bg-[#FFF0C8]"
+        >
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Type a message"
+            className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+            rows={textareaRows}
+            style={{ lineHeight: "24px" }}
+          />
+          <button
+            type="submit"
+            className="ml-2 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
