@@ -1,42 +1,86 @@
-
-
-import React from 'react';
-import BGImage from '../assets/BG.svg'
-import PeaopleImage from '../assets/People.svg'
+import React from "react";
+import PeaopleImage from "../assets/People.svg";
 import { useNavigate } from "react-router-dom";
+import BusinessStats from "../components/BussinessStats";
 
 const HomePage: React.FC = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const navigateConsultation=()=>{
-        navigate("/consultation");
-    }
+  const navigateConsultation = () => {
+    navigate("/consultation");
+  };
 
-    return (
+  return (
+    <div className="flex flex-col w-full bg-white">
+      {/* landing page */}
       <div
         className="relative flex flex-col md:flex-row items-center justify-between h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('./BG.svg')" }} // Use local image from public folder
+        style={{ backgroundImage: "url('./BG.svg')" }}
       >
-        {/* Text Section */}
         <div className="flex-3 p-16 md:p-16 ml-8">
           <h1 className="text-7xl mb-4">Uplift your XXX with</h1>
           <h1 className="text-7xl font-bold mb-4">BrightBestie</h1>
-          <p className='text-3xl mb-4'>Tagline Tagline Tagline</p>
-          <button onClick={() => navigateConsultation()} className="bg-white text-black text-2xl px-12 py-4 rounded-full mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white">
+          <p className="text-3xl mb-4">Tagline Tagline Tagline</p>
+          <button
+            onClick={() => navigateConsultation()}
+            className="bg-white text-black text-2xl px-12 py-4 rounded-full mt-4 shadow-xl hover:bg-black hover:border-white hover:text-white"
+          >
             ChatBot
-        </button>
+          </button>
         </div>
-  
-        {/* Image Section */}
+
         <div className="flex-2 hidden md:flex justify-center items-center">
           <img
             src={PeaopleImage}
             alt="Homepage visual"
-            className="absolute bottom-0 right-8 w-[32%] h-auto rounded-lg"
+            className="absolute bottom-0 right-8 w-[30%] h-auto rounded-lg"
           />
         </div>
       </div>
-    );
-  };
-  
-  export default HomePage;
+
+      <BusinessStats />
+
+      {/* service */}
+      <div className="flex flex-col items-center justify-center h-screen bg-white py-12">
+        <h1 className="text-5xl font-bold mb-8">Our Services</h1>
+        <div className="flex flex-col md:flex-row items-center justify-between w-full px-8">
+          <div className="flex-1 p-8 flex flex-col items-center">
+            <img
+              src="path/to/image1.jpg"
+              alt="Service 1"
+              className="w-32 h-32 mb-4 rounded-full object-cover"
+            />
+            <h2 className="text-3xl font-bold mb-4">Service 1</h2>
+            <p className="text-xl text-center">
+              Description Description Description Description Description
+            </p>
+          </div>
+          <div className="flex-1 p-8 flex flex-col items-center">
+            <img
+              src="path/to/image2.jpg"
+              alt="Service 2"
+              className="w-32 h-32 mb-4 rounded-full object-cover"
+            />
+            <h2 className="text-3xl font-bold mb-4">Service 2</h2>
+            <p className="text-xl text-center">
+              Description Description Description Description Description
+            </p>
+          </div>
+          <div className="flex-1 p-8 flex flex-col items-center">
+            <img
+              src="path/to/image3.jpg"
+              alt="Service 3"
+              className="w-32 h-32 mb-4 rounded-full object-cover"
+            />
+            <h2 className="text-3xl font-bold mb-4">Service 3</h2>
+            <p className="text-xl text-center">
+              Description Description Description Description Description
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
