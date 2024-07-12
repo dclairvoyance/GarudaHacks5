@@ -8,6 +8,8 @@ import React, {
 import axios from "axios";
 import Papa from "papaparse";
 import Markdown from 'react-markdown'
+import { useNavigate } from "react-router-dom";
+const navigate = useNavigate();
 
 import ChatbotProfileImage from "../assets/chatbot-profile.svg";
 
@@ -51,7 +53,7 @@ const ChatBot: React.FC = () => {
         Usahakan tracker mengandung nilai kuantitatif dan terdapat evaluasi yang kuantitatif, contoh membaca buku The Official Academic Guide to IELTS halaman 1-10 dan mengerjakan soal latihan halaman 19 - 20 sebanyak 30 soal dan harus benar minimal 80%. 
         Detailkan pula setiap dokumen syarat pendaftaran beasiswa dan / atau pendaftaran universitas. 
         Buatlah dalam format csv dengan header: 'month (bulan, dari bulan ini)' dan 'tasks' (daftar tugas dengan nilai kuantitatif, pisahkan setiap tugas dengan titik koma, jangan gunakan koma).
-        Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV. Jika anda ingin mulai menulis CSV, gunakan MARK "ABCDEFGHIJ"`,
+        Hilangkan pembuka dan penutup. Gunakan bahasa Inggris. Jika sudah selesai melakukan generate CSV, cukup keluarkan CSV. Jika anda ingin mulai menulis CSV, gunakan penanda "ABCDE"`,
       // TODO: add prompt
   };
 
@@ -110,6 +112,22 @@ const ChatBot: React.FC = () => {
     setInput(e.target.value);
   };
 
+  function cleanText(text) {
+    // Replace all newline characters with a space
+    let cleanedText = text.replace(/[\r\n]+/g, ' ');
+    
+    // Remove unnecessary spaces at the end of each line
+    cleanedText = cleanedText.replace(/\s+$/gm, '');
+    
+    // Replace multiple spaces with a single space
+    cleanedText = cleanedText.replace(/\s\s+/g, ' ');
+  
+    // Trim leading and trailing spaces
+    cleanedText = cleanedText.trim();
+  
+    return cleanedText;
+  }
+
   function splitText(text, searchString) {
     // Find the index of the search string in the text
     const index = text.indexOf(searchString);
@@ -120,12 +138,16 @@ const ChatBot: React.FC = () => {
     }
 
     // Extract the part before the search string
-    const part1 = text.substring(0, index).trim();
+    const part1 = cleanText(text.substring(0, index).trim());
     
     // Extract the part after the search string
     const part2 = text.substring(index + searchString.length).trim();
+    const regex = new RegExp(searchString, 'g');
   
-    return [part1, part2];
+    // Replace all occurrences of the search string with an empty string
+    const result = part2.replace(regex, '');
+  
+    return [part1, result];
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -162,8 +184,8 @@ const ChatBot: React.FC = () => {
       );
 
       const botMessage: Message = response.data.choices[0].message;
-      if (botMessage.content.includes("ABCDEFGHIJ")) {
-        let result = splitText(botMessage.content, "ABCDEFGHIJ")
+      if (botMessage.content.includes("ABCDE")) {
+        let result = splitText(botMessage.content, "ABCDE")
         console.log(result)
         let message: Message = {
             id: 100,
@@ -196,6 +218,7 @@ const ChatBot: React.FC = () => {
         transformedData = JSON.stringify(transformedData);
         console.log(transformedData)
         localStorage.setItem('data', transformedData)
+        navigate("/tracker");
       } else {
         setMessages([...updatedMessages, botMessage]);
       }
